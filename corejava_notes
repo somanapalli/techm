@@ -1,0 +1,814 @@
+
+10 days - core java
+
+    any programmers achievement 
+	
+	 -to develop the software/application 
+	 
+	 
+software/application:
+
+  collection of programs 
+  
+  every programmer must follow syntaxes 
+  
+  
+  if programmer not follows syntaxes 
+  what will happen?
+  
+     java compiler 
+	 
+it is the system defined java program 
+
+purpose: to check the syntaxes of the program 
+
+	 
+why should we learn core java?
+
+ what type of applications we have?
+
+
+   -desktop / standalone application 
+
+   -distributed application 
+
+   
+1.using core java knowledge, we can develop 
+  desktop applications
+
+2.we can learn advaned java.
+
+3.we can get a chance to learn some highend tools
+
+  like 
+     hadoop 
+	 salesforce
+	 pega
+	 tableu.. 
+	 
+	 
+
+
+
+
+
+
+  
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+ command to compile the java program 
+
+   javac <filename>.java
+
+   javac Welcome.java
+
+path:
+
+path is the location, where all the java tools 
+are available. 
+
+C:\Program Files\Java\jdk-19\bin
+
+
+   how to set the path:
+   
+   salesforce
+  
+  
+  command to execute the java program
+  
+   java <classname>
+   
+   java Welcome
+   
+   
+ what is java?
+
+
+  java is object oriented programming langugage
+  
+  
+    because it follows oops principles.
+	
+	 oops principels are given by -omg
+	 
+	 1.inheritance
+	 2.polymorphism
+	 3.abstraction 
+	 4.encapsulation 
+	 
+	  
+in java, to achieve the above 4 principles we do 
+have two concepts are there.
+
+  
+ 1.class
+ 2.object
+
+
+class:
+```````
+  class is a collection of 
+  
+  -variables
+  -methods
+  
+  
+
+
+
+
+
+ 
+
+
+
+class Techm
+{
+   stname;
+   stid;
+   
+   
+   learn()
+   {
+   }
+   observe()
+   {
+   }
+   teaching()
+   {
+   }
+   listening()
+   {
+   }
+  
+}
+
+
+ every java program should start with by defining 
+ the class .
+ 
+ note:
+ without defining the classs, there is no java 
+ program.
+ 
+ 
+ variable:
+ ````````````
+ variable is a name which we are giving to the 
+ memory lcoation, 
+ 
+ because of variables, we are able to improve 
+ the readability of the code.
+ 
+ purpose: to store the data.
+ 
+ syntax:
+    
+	 <datatypename> <variablename> = <value>;
+	 
+	 
+	 int stid = 100;
+	 
+	 
+	 
+ in java, we have 4 cateogires
+ 
+ 
+ integer
+ 
+    -byte
+	-short
+	-int
+	-long
+	
+ 
+ character
+ 
+    char
+ 
+ 
+ float
+ 
+    -float
+	-double
+	
+ 
+ boolean 
+ 
+    -boolean 
+	
+	
+ 
+ integer category datatype 
+  purpose: to store the numeric values
+  
+  
+ every datatype has maintaining two things
+ 
+ 
+ 1.memory size
+ 2.range 
+ 
+ byte - 1byte- 8bits
+ short -2 bytes - 16 bits
+ int - 4bytes
+ long - 8bytes
+ 
+formula to calculate the range of the datatype.
+
+byte
+
+  -2^n-1 to (2^n-1) -1
+  
+  -2^7 to 2^7 - 1
+  -128 to 127
+  
+  byte b = 130;
+  
+ 
+ 
+ 
+ https://github.com/somanapalli/dhaapps
+  
+method:
+```````
+method is the place , where we are writing the logic to perform some operation based on the 
+requirement.
+
+syntax:
+
+   <returntype> <methodname>()
+   {
+   
+   }
+  
+  method definition = method heading + method body
+  
+  
+  define the method display, which prints 
+  welcome message.
+  
+    void display()
+	{
+	
+	  System.out.println("welcome to techm");
+	}
+  
+  void =returntype 
+  meaning: not returning any value.
+  
+  
+ define one method , which gives name of the student?
+
+    String s = "Ram";
+	
+  
+  String getStudentName()
+  {
+     return "ram";
+  }
+  
+  note:
+  return type and return value must be compatible
+  or same with each other.
+  otherwise we will get compile time error.
+  
+  
+define one method which gives marks of the student?
+
+  float getStudentMarks()
+  {
+  
+    return 98.5f;
+  }
+  
+define one method which gives salary of the employee?
+
+       double getEmployeeSalary()
+	   {
+	   return 22000.78;
+	   }
+
+
+define one method which takes two integer parameters and returns their sum?
+
+    
+	 int getSum(int a, int b)
+	 {
+         return a+b;
+	 }
+
+define one method which takes firstname, lastname 
+as paramters and returns their fullname?
+
+            String getFullName(String first_Nname, String last_name)
+			{
+			return firstName+lastName;
+			}
+
+rules to declare the variables:
+```````````````````````````````
+rules to declare the variable name:
+``````````````````````````````````````
+1.variable name should always starts with alphabet 
+  it should not start with numeric 
+
+2.no special characters are allowed except $ and _(underscore)  
+
+3.we are not allowed to use varaible names as java reserved words.
+
+  
+4.variable names are case sensitive.
+
+5.blank spaces are not allowed while we are declaring the variables.
+
+  String student_name = "Ram"
+
+
+class is a collection of variables and methods 
+into a single unit. that single unit is known 
+as class. 
+
+note:
+inner method defintion is not possible in java
+inner method invocation is possible in java.
+
+
+
+
+
+
+
+
+object:
+instance of class is known as object
+instance:
+
+allocating sufficient amout of memeory space 
+for the instance properties which we are declaring inside
+the class.
+
+syntax:
+
+ <classname> <objectname> = new <classname>();
+ ex:
+ 
+  Student obj = new Student();
+  
+  Student ->name of the class
+  obj  -> name of the object
+  = -> assignment operator
+  new ->dynamic memory allocation operator
+  Student() -> constructor 
+  
+  
+  
+example:
+`````````
+
+public class Student {
+
+	//variables 
+	int stid=100;
+	String stname="Ram";
+	//method definition 
+	
+	 void getStudentInfo()
+	{
+		System.out.println("student id is:" + stid);
+		System.out.println("student name is : " + stname);
+	
+	}
+	 
+	 public static void main(String[] args) {
+		
+		 
+		 Student obj = new Student();
+		 
+		 System.out.println(obj.stid);
+		 System.out.println(obj.stname);
+		 
+		 //call the method
+		 
+		 obj.getStudentInfo();
+		 
+	}
+	
+}
+
+
+instance vs static:
+```````````````````
+  instance area
+  
+  static area
+  
+  
+  void m1()
+  {
+  //instance area
+  }
+  
+  
+  static void m2()
+  {
+  //static area
+  }
+  
+  
+  
+  the area which belongs to non static /instance 
+  method is known as instance area.
+  
+  the area which belongs to static method is known 
+  as static area.
+  
+  
+example on instance vs static?
+``````````````````````````````
+
+public class Student {
+
+	//instance variables 
+	int stid=100;
+	String stname="Ram";
+	static String collegeName="Aditya";
+	//method definition 
+	
+	//instance method
+	 void getStudentInfo()
+	{
+		 //instance area
+		System.out.println("student id is:" + stid);
+		System.out.println("student name is : " + stname);
+		System.out.println("college name is: " + collegeName);
+	
+	}
+	 
+	 public static void main(String[] args) {
+		
+		 //static area
+		 Student obj = new Student();
+		 
+		 System.out.println(obj.stid);
+		 System.out.println(obj.stname);
+		 System.out.println(Student.collegeName);
+		 
+		 //call the method
+		 
+		 obj.getStudentInfo();
+		 
+	}	
+}
+constructor:
+````````````
+constructor is a special member method which is used to initialize the object.
+
+
+ int a;
+ a=100;
+ 
+ int a =100;
+ 
+ initialization = declaration + assigning the value.
+ 
+ constructor is used to initialize the object.
+ 
+ 
+ rules:
+ 
+ constructor must be similar to class name.
+ 
+ constructor should not return anything even void 
+ also.
+ 
+ constructor should not be static
+ constructor should not be inherited.
+ 
+example without constructor:
+
+public class Student {
+
+	//variables declaration 
+	int stid;
+	String stname;
+	
+	public void setValues()
+	{
+		//assigning the values
+		stid=100;
+		stname="Naveen";
+		
+	}
+	
+	public void display()
+	{
+		System.out.println("student id is : " + stid);
+		System.out.println("student name is : " +stname);
+	}
+	 
+	
+    public static void main(String[] args) {
+		
+    	
+    	Student obj = new Student();
+    	
+    	obj.setValues();
+    	obj.display();
+    	
+	}
+	 
+	
+}
+
+
+example with constructor:
+`````````````````````````
+
+public class Student {
+
+	//variables declaration 
+	int stid;
+	String stname;
+	
+    //define the constructor
+	Student()
+	{
+		stid=100;
+		stname="priya";
+	}
+	
+	public void display()
+	{
+		System.out.println("student id is : " + stid);
+		System.out.println("student name is : " +stname);
+	}
+	 
+	
+    public static void main(String[] args) {
+		
+    	
+    	Student obj = new Student();
+    	
+    	
+    	obj.display();
+    	
+	}
+	 
+	
+}
+
+types of constructors:
+``````````````````````
+in java, we have two types of constructors are there
+  
+    1. default constructor
+	
+	      -system defined /compiler generated 
+		   default construcotr 
+		     -purpose: to initialize default values
+		   
+		  -user defined default constructor
+		  
+		     -purpose: to initialize our own values.
+			 
+
+example on user defined default constructor and system defined default constructor
+
+
+public class Student {
+
+	// variables declaration
+	int stid;
+	String stname;
+
+	public void display() {
+		System.out.println("student id is : " + stid);
+		System.out.println("student name is : " + stname);
+	}
+
+	/*
+	 * system define default constructor
+	 * public Student() { stid=0; stname=null; }
+	 */
+	
+	//user defined default constructor
+	public Student()
+	{
+		stid=100;
+		stname="Rama";
+	}
+
+	public static void main(String[] args) {
+
+		Student obj = new Student();
+
+		obj.display();
+
+	}
+
+}
+
+
+2.parameterized constructor
+	
+
+ it is a constructor which takes parameters 
+ 
+ 
+example on parameterized constructor:
+``````````````````````````````````````
+
+public class Student {
+
+	// variables declaration
+	int stid;
+	String stname;
+	
+	//parameterized constructor
+	public Student(int x, String y)
+	{
+		stid=x;
+		stname=y;
+	}
+
+	public void display() {
+		System.out.println("student id is : " + stid);
+		System.out.println("student name is : " + stname);
+	}
+
+	public static void main(String[] args) {
+
+		//create the object using parameterized constructor
+		
+		Student obj = new Student(100,"sravan");
+		obj.display();
+
+	}
+
+}
+
+
+
+
+
+
+
+
+  
+  
+example on both user defined and parameterized 
+constructor:
+
+
+public class Student {
+
+	// variables declaration
+	int stid;
+	String stname;
+	
+	//parameterized constructor
+	public Student(int x, String y)
+	{
+		stid=x;
+		stname=y;
+	}
+	
+	//user defined default constructor
+	public Student()
+	{
+		stid=100;
+		stname="ram";
+	}
+
+	public void display() {
+		System.out.println("student id is : " + stid);
+		System.out.println("student name is : " + stname);
+	}
+
+	public static void main(String[] args) {
+
+		//create the object using parameterized constructor
+		
+		Student obj = new Student(100,"sravan");
+		obj.display();
+
+		//create the object using user defined default constructor
+		Student obj1 = new Student();
+		obj1.display();
+		
+	}
+
+}
+
+this keyword:
+```````````````
+it is a java reserved keyword
+'this' is pointing current class object.
+
+ advantages:
+ ```````````
+ 1.to differntiate class level variables and 
+ method level parametes when both are same.
+ 
+example:
+`````````
+
+public class Demo {
+
+	//class level variables
+	int x,y;
+	
+	public void setValues(int x, int y)
+	{
+		//assigning local values to class level variables
+		this.x=x;
+		this.y=y;
+	}
+	
+	
+	public void display()
+	{
+		System.out.println(x + " " + y);
+	}
+	public static void main(String[] args) {
+
+		
+		Demo obj = new Demo();
+		obj.setValues(100,200);
+		obj.display();
+		
+	}
+
+}
+
+
+
+2.this() - call current class default constructor
+  this(..) - call current class parameterized constructor 
+
+
+whenever we have multiple construcotrs, to execute 
+these multiple constructors we no need to create 
+multiple objects 
+
+just by creating single object, by using this syntax like this() , this(..) we are allowed to execute multiple constructors using single object .
+
+
+constructor call must be the first statement 
+inside a constructor 
+
+
+
+example:
+```````
+
+public class Student {
+
+	//parameterized constructor
+	public Student(int x, String y)
+	{
+		
+	System.out.println("iam parameterized constructor");
+	}
+	
+	//user defined default constructor
+	public Student()
+	{
+		//calling current class parameterized constructor
+		this(100,"Ram");
+	System.out.println("iam default constructor");
+	
+	}
+
+	
+
+	public static void main(String[] args) {
+
+		//create the object using parameterized constructor
+		
+		Student obj = new Student();
+	
+	}
+
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
