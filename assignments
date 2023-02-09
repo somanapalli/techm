@@ -32,3 +32,95 @@ default construcotr?
 
 
 
+
+     https://github.com/somanapalli/techm
+
+
+day-3:
+``````
+
+1)write a java program which prints following pattern using 
+  nested for loop
+  
+  * * * * * * 
+  * * * * * 
+  * * * * 
+  * * * 
+  * *
+  *
+2)write a java program for finding sum of array elements using 
+  foreach loop or enhanced for loop?
+
+
+3)write a program on break statement inside labelled for loop,inside  while loop &
+  inside do-while loop?
+  
+  
+4)3)write a program on continue statement inside labelled for loop,inside  while loop &
+  inside do-while loop?
+
+
+5)Find the highest mark
+
+Raj is a professor who handles Mathematics ,he wants to conduct evaluation for the students.He wants to find the highest mark among the students to give the proficiency .
+Write a Java program to help Raj. (Assume 6 set of marks provided always)
+
+Sample Input 1 : 
+89 
+90
+67
+78
+98
+76
+Sample Output 1 :
+Highest mark is 98 
+Sample Input 2:
+96
+-89
+Sample Output 2 :
+Invalid mark
+
+
+6)
+Pass and Fail Count
+
+Ram has passed in certain subjects and failed in a few. Write a program to count the no of subjects he passed in and the no of subjects he has failed in. Marks scored below 50 is considered as failed. If Ram has passed in all the subjects print "Ram passed in all subjects" and if failed print "Ram failed in all subjects".
+Assume maximum size of array is 20,
+
+Sample Input 1:
+Enter the no of subjects:
+6
+60
+70
+80
+90
+45
+49
+Sample Output 1:
+Ram passed in 4 subjects and failed in 2 subjects
+
+Sample Input 2:
+Enter the no of subjects:
+0
+Sample Output 2:
+Invalid input range
+
+Sample Input 3:
+Enter the no of subjects:
+-2
+Sample Output 3:
+Invalid input range
+
+
+
+
+
+
+
+
+
+
+
+
+
+
