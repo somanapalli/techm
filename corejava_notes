@@ -1868,6 +1868,196 @@ use continue staetment in do while loop?
   
   
   
+String class api in java:
+``````````````````````````
+String is a predefined class available in java.lang package.
+
+purpose: to store the series of characters.
+
+
+in how many ways we can create the String object 
+
+ -> two ways
+ 
+ 1.using String literal
+ 2.using new keyword
+ 
+ String s1 = "Rama";(it gets stored inside scp memory area which is the part of 
+ heap memory area which is the part of jvm which is the part of ram)
+ 
+ 
+ String s2 = new String("Rama");
+ (it gets stored inside heap memory area )
+ 
+ 
+ note:
+ `````
+  scp memory area will not allow duplicates
+  
+  where as heap memory always creates new object irrespective
+  of whether it is same or different.
+  
+  
+ 
+String s1 = new String("rama");
+String s2 = new String("rama");
+
+ 
+
+String class object is immutable in nature.
+
+
+unmodifiable 
+
+
+->once we create any String object, on top of existing String object 
+we could not perform any manipulations/modifications 
+
+how to compare the String:
+``````````````````````````
+ ->by using == operator(Reference comparision operator)
+ ->by using equals() or equalsIgnoreCase()
+ ->by using compareTo() or compareTOIgnoreCase()
+     -compareTo() compares Strings based on lexigraphical comparision.
+	 -based on unicode values.
+	 
+	 
+example:
+````````
+//program on string comparisions -different ways 
+
+public class Test5 {
+	
+	public static void main(String[] args) {
+		
+		//string literal approach -it won't allow duplicates
+		String s1 = "rama";
+		String s2 = "rama";
+		String s5 = "Rama";
+
+		//to find out unicode value of character based on the index
+		System.out.println(s1.codePointAt(0));
+		System.out.println(s5.codePointAt(0));
+		
+		
+		System.out.println(s1==s2);//true
+		System.out.println(s1.equals(s2));//true
+		System.out.println(s1.equals(s5));//false
+		System.out.println(s1.equalsIgnoreCase(s5));//true
+		System.out.println(s1.compareTo(s2));//0
+		System.out.println(s1.compareTo(s5));//32
+		System.out.println(s5.compareTo(s1));//-32
+		System.out.println(s1.compareToIgnoreCase(s5));//0
+		
+		//using new keyword -it creates everytime as a new object
+		String s3 = new String("hyd");
+		String s4 = new String("hyd");
+		
+		System.out.println(s3==s4);//false
+		System.out.println(s3.equals(s4));//true
+		
+	}
+
+}
+
+ 
+checking immutability vs mutablity using String,StringBuffer and StringBuilder:
+
+
+public class Test6 {
+
+	public static void main(String[] args) {
+		
+		//immutable object
+	 String s1 = "Rama";
+	 s1.concat("hyd");
+	 System.out.println(s1);//Rama
+	   //mutable object
+	 StringBuffer s2 = new StringBuffer("Rama");
+	 s2.append("hyd");
+	 System.out.println(s2);//Ramahyd
+	  //mutable object
+	 StringBuilder s3 = new StringBuilder("Rama");
+	 s3.append("hyd");
+	 System.out.println(s3);//Ramahyd
+	 
+	 
+	 
+	}
+}
+
+
+note:
+using StringBuffer & StringBuilder we can create mutable Strings but 
+differnce is StringBuffer methods are synchrnozed(thread safe) methods where as
+StringBuilder methods are non-synchrnized(not thread safe) methods.
+
+example on frequently used methods of String class:
+````````````````````````````````````````````````````
+
+public class Test6 {
+
+	public static void main(String[] args) {
+		
+		String s1 = new String("Rama");
+		String s3= new String("Rama");
+		String s4 = new String("Rama,hyd,software,hardware");	
+		String s2 = "  banga  lore   ";
+		int value=40;
+		String s5 = String.valueOf(value);
+		
+		String str = new String("welcome to java sessions");
+	
+		System.out.println("length of the stirng: " + s1.length());
+		
+		System.out.println("character at 0th position: " + s1.charAt(0));//R
+		
+		System.out.println(s1.concat("hyd"));//Ramahyd
+		
+		System.out.println(s1.contains("R"));//true
+		System.out.println(s1.contains("j"));//false
+		
+		System.out.println(s1.endsWith("j"));
+		System.out.println(s2.indent(2));//  banga  lore
+		System.out.println(s2.indent(-2));//banga  lore
+		System.out.println(s2.indent(0));//  banga  lore	
+		System.out.println(s1.intern()==s3.intern());//true
+		System.out.println(s1.substring(1));//ama
+		System.out.println(s1.substring(0, 3));//Ram
+		String[] split = s4.split(",");
+		for(String s:split)
+		{
+			System.out.println(s);
+		}
+		
+		System.out.println(s5+10);
+		System.out.println(s2.length());
+        System.out.println(s2.strip().length());
+        
+        System.out.println(str.matches("welcome(.*)"));
+        System.out.println(str.matches("tutorials"));
+ 
+	}
+}
+
+	
+	
+	
+	
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

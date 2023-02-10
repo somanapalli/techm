@@ -114,9 +114,65 @@ Invalid input range
 
 
 
+7)
+Palindrome
+
+Astrologist believes that having a palindromic name is very auspicious . As we all know, a palindrome is a word that can be read the same way in either direction.There should not be a space or any special character in the word entered. If yes, display "Invalid Input". Write a Java program to determine whether a given word is a palindrome or not.
+
+Sample Input 1:
+Enter the word : 
+Malayalam
+Sample Output 1: 
+Malayalam is a Palindrome
+Sample Input 2:
+Enter the word : 
+Apple
+Sample Output 2: 
+Apple is not a Palindrome
+Sample Input 3:
+Enter the word : 
+no on
+Sample Output 3: 
+Invalid Input
+Sample Input 4:
+Enter the word : 
+@nnn
+Sample Output 4: 
+Invalid Input
 
 
-
+8)
+Count occurrence of a character
+Raji wants to count the no of occurrences of the given character.Write a program to accept a word from the user. Get a character from the user and find the no of occurrences . 
+Check whether the given character and word is valid
+The word is valid if it contains only alphabets and no space or any special characters or numbers.
+The character is valid if it is an alphabet alone.
+Sample Input 1:
+Enter a word:
+programming
+Enter the character:
+m
+Sample Output 1:
+No of 'm' present in the given word is 2.
+Sample Input 2:
+Enter a word:
+programming
+Enter the character:
+s
+Sample Output 2:
+The given character 's' not present in the given word.
+Sample Input 3:
+Enter a word:
+56
+Sample Output 3:
+Not a valid string
+Sample Input 4:
+Enter a word:
+Hello
+Enter the character:
+6
+Sample Output 4:
+Given character is not an alphabet
 
 
 
