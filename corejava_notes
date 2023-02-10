@@ -2046,15 +2046,480 @@ public class Test6 {
 	
   
   
+type casting in java:
+`````````````````````
+in java, type casting is a method or process that converts one datatype
+into another data type in both ways manually and automatically.
+
+
+The automatic conversion is done by the compiler and manual conversion 
+performed by the programmer.
+
+
+double -> float -> long -> int ->short ->byte
+
+converting a value from one datat type to another data type is known 
+as type casting.
+
+
+there are two types of type casting:
+
+ -widening type casting
+ -narrowing type casting
+ 
+ converting a lower data type into a higher one is called 
+ widening type casting.
+ 
+ it is also known as implicit conversion or casting down.
+ 
+ it is done automatically.
+ 
+ It is safe because there is no chance to lose the data.
+ 
+ it takes place  when
+  
+  -both data types must be compatible with each other.
+  -the target type must be larger than the source type.
+  
+
+
+example:
+`````````
+
+public class Test4 {
+
+	
+	public static void main(String[] args) {
+		
+		int x = 5;
+		
+		long y = x;
+		
+		float z = y;
+		
+		System.out.println("before conversion , int value:" +x);
+		System.out.println("after conversion, long value:" +y);
+		System.out.println("after conversion,float value: " +z);
+		
+		
+	}
+}
+
+
+narrowing type casting:
+```````````````````````
+converting a higher data type into a lower one is called
+narrowing type casting.
+
+it is known as explicit conversion or casting up.
+
+it is done manually by the programmer.
+
+double -> float -> long -> int ->short ->byte
+
+
+example:
+`````````
+
+public class Test4 {
+
+	
+	public static void main(String[] args) {
+		
+		double d = 323.66;
+		
+		//converting double data type into long data type
+		
+		 long l = (long)d;
+		
+		 //converting long data type into int data type
+		 
+		 int i =(int)l;
+		 
+		System.out.println("before conversion :" +d);
+		System.out.println("after conversion, long value:" +l);
+		System.out.println("after conversion,int value: " +i);
+		
+		
+	}
+} 
   
   
   
+ java is object oriented programming language
+
+ -> since it follows omg derived principles
+ 
+ inheritance
+ polymorphism
+ abstraction
+ encapsulation
+ 
+class & object
+
+
+inheritance:
+`````````````
+  it is the process of taking the properties from one class to another 
+  class.
+  
+  the class which is giving the properties is known as base/super/parent 
+  class.
+  
+  the class which is taking the properties is known as sub/derived/child
+  class.
+  
+  note:
+  `````
+  using extends keyword we can achieve the concept of inheritance.
+  in the context of child class only we have to use extends keyword.
+  
+  types of inheritances:
+  
+   simple/single inheritance
+   multilevel inheritance
+    multiple inheritance
+   hierarchical inheritance
+   hybrid inheritance
+   
+   
+   E
+   
+   D
+  
+  A B C
+  
+   
+  
+ note:
+
+ using extends keyword we are able to derive single class from single class 
+not from multiple classes or more than one class.
+
+ 
+->reusability
+
+
+note:
+````
+if we create the child class object, memory locations will be created for 
+both parent class properties and child class properties where as 
+if we create the object for parent class object, only we are able to access
+parent class properties.
+
+
+is-a relation 
+``````````````
+whenever one class inherits another class,it is called as 
+an IS-A relationship.
+
+HAS-A relation:
+`````````````````
+wheneve an instance of one class is used in another class, it is called
+HAS-A relationship.
+
+
+Parent.java:
+````````````
+//parent class cum busines logic class
+public class Parent {
+	
+	
+	public void sum(int x, int y)
+	{
+		System.out.println("sum is: " +(x+y));
+	}
+
+}
+
+Child.java:
+````````````
+//child class cum business logic class
+public class Child extends Parent {
+	
+	public void sub(int x, int y)
+	
+	{
+		System.out.println("substraction is: " + (x-y));
+	}
+
+}
+
+
+Test7.java(execution logic class):
+````````````````````````````````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		
+		Child obj = new Child();
+		obj.sum(2, 3);
+		obj.sub(4, 3);
+		
+	}
+} 
   
   
+java is object oriented programming language
+
+ -> since it follows omg derived principles
+ 
+ inheritance
+ polymorphism
+ abstraction
+ encapsulation
+ 
+class & object
+
+
+inheritance:
+`````````````
+  it is the process of taking the properties from one class to another 
+  class.
+  
+  the class which is giving the properties is known as base/super/parent 
+  class.
+  
+  the class which is taking the properties is known as sub/derived/child
+  class.
+  
+  note:
+  `````
+  using extends keyword we can achieve the concept of inheritance.
+  in the context of child class only we have to use extends keyword.
+  
+  types of inheritances:
+  
+   simple/single inheritance
+   multilevel inheritance
+    multiple inheritance
+   hierarchical inheritance
+   hybrid inheritance
+   
+   
+   E
+   
+   D
+  
+  A B C
+  
+   
+  
+ note:
+
+ using extends keyword we are able to derive single class from single class 
+not from multiple classes or more than one class.
+
+ 
+->reusability
+
+
+note:
+````
+if we create the child class object, memory locations will be created for 
+both parent class properties and child class properties where as 
+if we create the object for parent class object, only we are able to access
+parent class properties.
+
+
+is-a relation 
+``````````````
+whenever one class inherits another class,it is called as 
+an IS-A relationship.
+
+HAS-A relation:
+`````````````````
+wheneve an instance of one class is used in another class, it is called
+HAS-A relationship.
+
+
+Parent.java:
+````````````
+//parent class cum busines logic class
+public class Parent {
+	
+	
+	public void sum(int x, int y)
+	{
+		System.out.println("sum is: " +(x+y));
+	}
+
+}
+
+Child.java:
+````````````
+//child class cum business logic class
+public class Child extends Parent {
+	
+	public void sub(int x, int y)
+	
+	{
+		System.out.println("substraction is: " + (x-y));
+	}
+
+}
+
+
+Test7.java(execution logic class):
+````````````````````````````````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		
+		Child obj = new Child();
+		obj.sum(2, 3);
+		obj.sub(4, 3);
+		
+	}
+}
+
+  
+ note: constructor should not be inherited.
+
+ 
+super:
+``````
+super is a java reserved keyword.
+it is always refering immediate parent class properties.
+
+  
+  super at variable level
+  super at method level
+  super at constructor level.
   
   
+example:
+````````
+//parent class cum busines logic class
+public class Parent {
+	
+	int x=100;
+	
+	
+	
+}
+
+Child.java:
+````````````
+//child class cum business logic class
+public class Child extends Parent {
+	
+	int x=200;
+
+	public Child()
+	{
+		System.out.println(x);
+		System.out.println(super.x);
+	}
+
+}
+
+Test7.java:
+```````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		Child obj = new Child();
+		
+	}
+}
+ 
   
+note:
+`````
+writing the super() is optional for to invoke the parent class default 
+constructor
+
+note:
+
+writing the super(..) is mandatory to invoke parent class parameterized 
+constructor when there is no default constructor.
+
+
+Parent.java:
+````````````
+//parent class cum business logic class
+public class Parent {
+
+	public Parent(int x, int y)
+	{
+		System.out.println("iam from parameterized constructor-parent");
+	}
+
+	
+	
+}
+
+Child.java:
+```````````
+//child class cum business logic class
+public class Child extends Parent {
+
+	
+	public Child() {
+		//invoke parent class parameterized constructor
+		super(2,3);
+		System.out.println("iam from default constructor-child class");
+		
+	}
+
+}
+
+
+Test7.java:
+```````````
+//execution logic class
+public class Test7 {
+
+	public static void main(String[] args) {
+		
+		//create the object for child class
+		Child obj = new Child();
+		
+	}
+}
+
   
+note:
+`````
+for every constructor super()is added automaticlly by the java compiler which 
+internally invokes parent class default constructor.
+
+ 
+assignment: write a program which describes super at method level.
+
+
+
+note:
+`````
+multiple inheritance is not possible through the concept of classe(s) , because 
+of we will get ambiguity issue if two parent classes are maintaining same 
+properties.
+
+this problem we can achieve by using interface concept.
+
+
+ class Object{
+ }
+
+ class A extends Object
+ {
+ }
+ class B extends A
+ {
+ }
+ class C extends B
+ {
+ }  
   
   
   
