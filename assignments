@@ -56,7 +56,7 @@ day-3:
   inside do-while loop?
   
   
-4)3)write a program on continue statement inside labelled for loop,inside  while loop &
+4)write a program on continue statement inside labelled for loop,inside  while loop &
   inside do-while loop?
 
 
@@ -246,4 +246,120 @@ Id : 101
 Name : Vivek
 Salary : 20000.0
 Net Salary : 18600.0
+
+day-6:
+```````
+12)
+Ticket Price Calculation - Static
+Ticket Calculation
+Create a class Ticket with the following private variables
+int ticketid;
+int price;
+static int availableTickets;
+
+Include getters and setters methods in the Ticket class.
+AvailableTickets should hold only positive value. Zero and negative values are not allowed.(This logic should be checked inside the corresponding setter method)
+Write the following method in the Ticket class:
+public int calculateTicketCost(int nooftickets) —this method should check the ticket availability, If the tickets are available, reduce the nooftickets from availableTickets and calculate the total amount as nooftickets*price  and return the total amount.  If the tickets are not available, this method should return -1.
+Write a main method in the Main class to test the application.
+Sample input and output
+Enter no of bookings:
+2
+Enter the available tickets:
+25
+Enter the ticketid:
+123
+Enter the price:
+100
+Enter the no of tickets:
+5
+Available tickets: 25
+Total amount:500
+Available ticket after booking:20
+Enter the ticketid:
+124
+Enter the price:
+100
+Enter the no of tickets:
+2
+Available tickets: 20
+Total amount:200
+Available ticket after booking:18
+Sample input and output 2:
+Enter no of bookings:
+1
+Enter the available tickets:
+25
+Enter the ticketid:
+123
+Enter the price:
+100
+Enter the no of tickets:
+26
+Tickets not sufficient / available
+
+
+13)
+BankAccountDetails
+In the first round of HR interview for a banking sector,  HR decides to make candidates design an application which provides only  information on transaction like amount withdrawn with respect to fields given. Develop a program to implement this scenario. 
+Create a class Account with the attributes: 
+•	accountId  int
+•	accountType String 
+•	balance int
+The method boolean withdraw(int) used  to calculate the current balance of the respective account. Before that it should enough balance.  If there is enough balance, deduct the amount from the balance and print "Balance amount after withdraw: XXX" and return true.  If there is no enough balance, print "Sorry!!! No enough balance" and return false. 
+Create a class AccountDetails with main function and the below methods :
+•	public Account getAccountDetails() -  This methods gets the input related to Account from the user and returns the Account object with all values set.  If the input given for balance is less than or equal to zero, consider it as invalid and display "Balance should be positive". Continue this kind of evaluation till user enters a positive value.
+
+•	public int getWithdrawAmount() -  This methods gets the amount to be withdrawn as input from the user and returns the same.  If the input given for amount is less than or equal to zero, consider it as invalid and display "Amount should be positive". Continue this kind of evaluation till user enters a positive value.
+Use appropriate getters and setters.
+Sample input 1:
+Enter account id:
+100
+Enter account type:
+Savings
+Enter balance:
+10000
+Enter amount to be withdrawn:
+500
+Sample Output 1:
+Balance amount after withdraw: 9500
+Sample input 2:
+Enter account id:
+101
+Enter account type:
+Savings
+Enter balance:
+1000
+Enter amount to be withdrawn:
+1500
+Sample Output 2:
+Sorry!!! No enough balance
+
+Sample input 3:
+Enter account id:
+100
+Enter account type:
+Savings
+Enter balance:
+-100
+Balance should be positive
+Enter balance:
+5000
+Enter amount to be withdrawn:
+500
+Sample Output 1:
+Balance amount after withdraw: 4500
+
+
+
+
+
+
+
+
+
+
+
+
+
 
