@@ -2522,6 +2522,77 @@ this problem we can achieve by using interface concept.
  }  
   
   
+encapsulation:
+``````````````
+
+encapsulation = datahiding + abstraction
+
+encapsulated class:
+
+ class is the best example for an encapsulation.
+ 
+ by declaring datamembers as private 
+ and by defnining public setters and getter methods(s).
+ 
+ 
+Student.java:
+``````````````
+
+public class Student {
+
+	//data hiding
+	private int stid;
+	private String stname;
+	
+	//abstraction 
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	
+	
+	public String toString()
+	{
+		return stid + " " +stname;
+	}
+	
+	
+	
+}
+Test10.java:
+````````````
+
+public class Test10 {
+	
+	public static void main(String[] args) {
+		Student student = new Student();
+		
+		student.setStid(100);
+		student.setStname("Rama");
+		
+		System.out.println("student id: " + student.getStid());
+		System.out.println("student name: " + student.getStname());
+		
+	}
+
+}
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   

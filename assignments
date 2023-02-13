@@ -194,5 +194,56 @@ Sample Output 2:
 First character of each word is already in uppercase
 
 
+10)Book Detail
+Create a class Book with the following private member variables
+•	String bookName
+•	int bookPrice 
+•	String authorName
+Include appropriate getters and setters method.
+Create a class TestBook which has the main method.  Get the details as shown in the sample input. Create an object for book class and assign the value for its attrbutes using the setters.  Print the output as shown in the sample output using the getters method. 
+Note: Use the same attribute names as given in the question and camel case notation for methods.  Name of book and author can have space in between.
 
+Sample Input 1:
+Enter the Book name:
+Java
+Enter the price:
+500
+Enter the Author name:
+Einstein
+Sample Output 1:
+Book Details
+Book Name :Java
+Book Price :500
+Author Name :Einstein
+
+11)
+Employee Salary Calculation
+Create a class Employee with the following private member variables.
+•	int employeeId
+•	String employeeName
+•	double salary
+•	double netSalary
+
+Include appropriate getters and setters method in Employee class. Write the following method in the Employee class:
+public void calculateNetSalary(int pfpercentage)  - This method should take PF percentage as argument. Deduct the PF amount from the salary and set the netSalary.  
+
+Create a Main class which has the main method which invokes the method to get the input and prints the details as shown in the sample. 
+Also write a method :
+   public static Employee getEmployeeDetails() -  which gets the employee details and returns the employee object.
+   
+public static int getPFPercentage() -  which gets the PF percentage and returns the same
+Sample Input 1:
+Enter Id:
+101
+Enter Name:
+Vivek
+Enter salary:
+20000
+Enter PF percentage:
+7
+Sample Output 1:
+Id : 101
+Name : Vivek
+Salary : 20000.0
+Net Salary : 18600.0
 
