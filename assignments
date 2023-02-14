@@ -1,3 +1,6 @@
+day-1
+`````
+
 1.write a java program which displays welcome message without ide?
 2.write a java program which displays welcome message using eclipse ide?
 3.write a java program which displays variables values using all 
@@ -33,7 +36,7 @@ default construcotr?
 
 
 
-     https://github.com/somanapalli/techm
+    
 
 
 day-3:
@@ -399,30 +402,8 @@ Output
 Volume of the Cuboid is 6.00
 
 
-3)Reverse The Number
-Write a program to reverse a given number. Say for example, If the given number is 35(thrity five), it should be reversed as 53(fifty three)].  If the input given is zero display 0. If the input is less than zero then display "Number should be positive"
-Refer the sample input and output.
 
-Sample Input 1 :
-Enter The Number:
-478
-Sample Output  1:
-Output is:874
-
-Sample Input  2:
-Enter The Number:
--470
-Sample Output  2:
-Number should be positive
-
-Sample Input  3:
-Enter The Number:
-34
-Sample Output  3:
-Output is:43
-
-
-4)
+3)
 Factors of a Number
 
 Betsy  teaches her daughter  to find the factors of a given number.  When she provides a number to her daughter, she should tell the factors of that number.  Help her to do this, by writing a program.
@@ -442,11 +423,11 @@ Sample Output 2 :
 1, 3, 7, 21, 89, 267, 623, 1869
 
 
-5)write a program on packages and accessmodifiers?
+4)write a program on packages and accessmodifiers?
   try to keep your class inside your package and try to import from 
   other package?
   
-6)write one program on abstraction 
+5)write one program on abstraction 
   define one interface with the name of Bank and maintain one abstract method say it is getRateOfInterest() which returns double value and now 
   define 2 implementation classes like Icici , Sbi etc.. and at last define 
   one test class to test these?
