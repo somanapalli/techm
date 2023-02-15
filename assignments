@@ -497,6 +497,8 @@ Registration Failed. Salary cannot be less than 10000.
 5)write a java program for creating the file using File class
 6)write a java program for performing the write operation using 
 FileWriter,BufferedWriter & PrintWriter classes.
+7)write a java program for performing read operation using 
+FileReader & BufferedReader class.
 
 
 
