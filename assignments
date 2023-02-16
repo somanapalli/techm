@@ -511,7 +511,15 @@ data using FileInputStream and FileOutputStream
   
 3)Write a java program on ArrayList and LinkedList?
 
+4)write a java program on Set interface(HashSet and LinkedHashSet)
 
+5)write a java program on SortedSet interface(TreeSet) and it's special methods?
+
+6)Write a java program on Queue interface(ArrayDequeue,LinkedList and 
+  PriorityQueue) 
+  (use special methods of Queue interface like offer(),peek(),poll() etc..)
+  
+  
 
 
 
