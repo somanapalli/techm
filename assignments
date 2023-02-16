@@ -500,6 +500,15 @@ FileWriter,BufferedWriter & PrintWriter classes.
 7)write a java program for performing read operation using 
 FileReader & BufferedReader class.
 
+day-7:
+``````
+1)write a java program to perfrom read and write operations on binary 
+data using FileInputStream and FileOutputStream 
+
+2)write a java program to perform serialization and deserialiation 
+  using ObjectInputStream and ObjectOutputStream classes?
+  
+  
 
 
 

@@ -4176,7 +4176,208 @@ public class Test4 {
 }
 
 
+example on read and write operation on binary data using bytestream 
+related clasess:
+``````````````````````````````````````````````````````````````````````
 
+package com.infotech.files;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+public class Test7 {
+	
+	public static void main(String[] args) {
+		try {
+			//create the object for FileInputStream for reading the binary data
+		FileInputStream fis = new FileInputStream("encapsulation.jpg");
+		
+		//create the object for FileOutputStream for writing the binary data
+		FileOutputStream fos = new FileOutputStream("naveesh.jpg");
+		
+		
+		int x;
+		while((x=fis.read())!=-1) {
+			
+			fos.write(x);
+		}
+		System.out.println("image created succesfully");
+		}
+		
+		catch(IOException ioe)
+		{
+			System.out.println(ioe);
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+serialization & desererialization 
+``````````````````````````````````
+serialziation:
+``````````````
+
+the process of writing the object data  into network suppored format 
+is known as serialization.
+
+because by default network won't support object format data to transfer 
+from one machine to another machine.
+
+desserialization:
+````````````````
+
+the process of reading the object data from the network supported file 
+is known as deserizliation.
+
+
+
+   
+
+ ->ObjectInputStream 
+     predefined class 
+	 java.io 
+	 purpose: to read the object data 
+	 method: readObject()
+	 
+ ->ObjectOuputStream 
+     predefined class
+	 java.io
+	 purpose: to write the object data 
+	 
+	 method: writeObject()
+	 
+ 
+
+Student.java:
+```````````````
+package com.infotech.files;
+
+import java.io.Serializable;
+
+public class Student implements Serializable{
+	
+	private int stid;
+	private String stname;
+	
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getStname() {
+		return stname;
+	}
+	public void setStname(String stname) {
+		this.stname = stname;
+	}
+	
+	public Student(int stid, String stname)
+	{
+		this.stid=stid;
+		this.stname=stname;
+		}
+	
+	public Student()
+	{
+		
+	}
+	
+	public String toString()
+	{
+		return stid + " " +stname;
+	}
+
+}
+
+example for serialziation:
+`````````````````````````````
+package com.infotech.files;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
+//serialization
+public class Test8 {
+	
+	public static void main(String[] args) throws Exception{
+		
+		
+		//create the object for FileOutputStream 
+		FileOutputStream fos = new FileOutputStream("ram.txt");
+		
+		//create the object for ObjectOutputStream 
+		
+		ObjectOutputStream oos = new ObjectOutputStream(fos);
+		
+		
+		Student st= new Student(100,"ram");
+		
+		
+		oos.writeObject(st);
+		
+		System.out.println("serialization process has done");
+		
+		
+	}
+
+}
+
+example for desererialization:
+`````````````````````````````
+package com.infotech.files;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
+//deserialization
+public class Test9 {
+
+	
+	public static void main(String[] args) throws Exception {
+		
+		//create the object of FileInputStream 
+		
+		FileInputStream fis = new FileInputStream("ram.txt");
+		//create the object of ObjectInputStream 
+		
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		
+		
+		Object obj = ois.readObject();
+		//convert Object type to Student type
+		//convert parent type to child type -down casting
+		
+		
+		
+		Student stu = (Student)obj;
+		
+		System.out.println(stu);
+		
+	
+	}
+}
+
+ 
+ 
+note:
+every java class we can't serialize, to make it happen corresponding 
+java class must be implementing from Serializable marker interface 
+which is available in java.io package otherwise we will get exception 
+saying that java.io.NotSerialziable 
+
+ 
+transient keyword:
+```````````````````
+transient is a variables modifier used in serialization. At the time of serialization, if we don't want to save value of a particular variable in a file, then we use transient keyword. When JVM comes across transient keyword, it ignores original value of the variable and save default value of that variable data type
 
 
 
