@@ -5317,7 +5317,954 @@ public class Test7 {
 //previous()- to retrieve the previous element
 
   
+Comparator:
+``````````
+Comparator interface available inside java.util pacakge
+
+ inside this interface we do have one method
+ 
+   compare(T1,T2);
+   
+	 
+Comparator is meant for getting the data in our own order / custom order
+
+
+
+
+
+
+
+
+
+
+
+
+(key,value) pair
+
+Map
+
+   -
+SortedMap
+
+
+A Map doesn't allow duplicate keys, but you can have duplicate values.
+
+A Map can't be traversed
+
+keySet()
+entrySet()
+
+
+HashMap: HashMap is the implementation class of Map, but it doesn't maintain any order.
+		 
+LinkedHashMap: it is also the implemenataion class of Map, it inherits HashMap class. it maintains insertion order.
+
+
+TreeMap:
+ TreeMap is the implementation class of SortedMap, it maintains ascending order
+ 
+  put(-,-) -> insert any entry in to the map 
+   
+   entry ->(key,value)
+   
+   
+  putAll(Map m) -> it is used to insert the specicied map into the existing map.
   
+  
+
+interface Map
+{
+  interface Entry
+  {
+  }
+  
+}
+Map.Entry:
+``````````
+Entry is the inner interface of Map. so we will be accessed it by Map.Entry name.
+
+it returns a collection view of the map.
+
+
+   getKey() 
+   getValue()
+   
+
+example on HashMap:
+```````````````````
+1.HashMap doesn't allow duplicate key objects but it allows duplicate value objects
+2.it allows null values for both key objects and as well as value objects.
+3.insertion order is not preserved.
+
+example:
+````````
+package com.jse.cfw;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		Map m = new HashMap();
+		
+		//adding elements to Map
+		
+		m.put(100, "rama");
+		m.put(200, "amith");
+		m.put(45, "john");
+		m.put(67, "leshvi");
+		m.put(null, null);
+		m.put(67, "charvi");
+		m.put(101, "rama");
+		
+		
+		Set set =m.entrySet();
+		
+		Iterator itr = set.iterator();
+		
+		while(itr.hasNext())
+		{
+			Map.Entry entry = (Map.Entry)itr.next();
+			System.out.println(entry.getKey() + " " + entry.getValue());
+					
+					
+		}
+		
+	}
+
+}
+
+with generics syntax :
+``````````````````````
+package com.jse.cfw;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		Map<Integer,String> m = new HashMap<Integer,String>();
+		
+		//adding elements to Map
+		
+		m.put(100, "rama");
+		m.put(200, "amith");
+		m.put(45, "john");
+		m.put(67, "leshvi");
+		m.put(null, null);
+		m.put(67, "charvi");
+		m.put(101, "rama");
+		
+		
+		Set<Entry<Integer, String>> set = m.entrySet();
+		
+		Iterator<Entry<Integer, String>> itr = set.iterator();
+		
+		while(itr.hasNext())
+		{
+	
+	       Entry<Integer, String> entry = itr.next();
+			System.out.println(entry.getKey() + " " + entry.getValue());
+					
+					
+		}
+		
+	}
+
+}
+
+
+using for each loop traversing map elements:
+````````````````````````````````````````````
+package com.jse.cfw;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		Map<Integer,String> m = new HashMap<Integer,String>();
+		
+		//adding elements to Map
+		
+		m.put(100, "rama");
+		m.put(200, "amith");
+		m.put(45, "john");
+		m.put(67, "leshvi");
+		m.put(null, null);
+		m.put(67, "charvi");
+		m.put(101, "rama");
+		
+		
+		for(Map.Entry<Integer,String> m1: m.entrySet())	
+		{
+			System.out.println(m1.getKey() + " " + m1.getValue());
+		}
+		
+	}
+
+}
+
+LinkedHashMap vs HashMap
+
+all the properties of HashMap are applicable to LinkedHashMap except LinkedHashMap follows insertion order.
+
+
+SortedMap:
+``````````
+SortedMap is the sub interface of Map interface 
+
+ TreeMap is the implementtaion class
+ 
+ 
+1.TreeMap doesn't allows null keys or null values if you try to add we will get runtime exception saying that java.lang.NullPointerException
+  
+2.duplicate keys are not possible where as duplicate values are possible
+
+3.we will get the data in ascending order based on the key objects.
+
+example on top of TreeMap:
+``````````````````````````
+package com.jse.cfw;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		SortedMap<Integer,String> m = new TreeMap<Integer,String>();
+		
+		//adding elements to Map
+		
+		m.put(100, "rama");
+		m.put(200, "amith");
+		m.put(45, "john");
+		m.put(67, "leshvi");
+		
+		m.put(67, "charvi");
+		m.put(101, "rama");
+		
+		
+		for(Map.Entry<Integer,String> m1: m.entrySet())	
+		{
+			System.out.println(m1.getKey() + " " + m1.getValue());
+		}
+		
+	}
+
+}
+
+
+example:
+````````
+package com.jse.cfw;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		SortedMap<Integer,String> m = new TreeMap<Integer,String>();
+		
+		//adding elements to Map
+		
+		m.put(100, "rama");
+		m.put(200, "amith");
+		m.put(45, "john");
+		m.put(67, "leshvi");
+		
+		m.put(67, "charvi");
+		m.put(101, "rama");
+		
+		
+		for(Map.Entry<Integer,String> m1: m.entrySet())	
+		{
+			System.out.println(m1.getKey() + " " + m1.getValue());
+		}
+		
+		System.out.println("===========================");
+		
+		System.out.println(m.firstKey());
+		System.out.println(m.lastKey());
+		System.out.println(m.headMap(100));//{45=john, 67=charvi}
+		
+		System.out.println(m.tailMap(100));//{100=rama, 101=rama, 200=amith}
+		System.out.println(m.subMap(45, 101));//{45=john, 67=charvi, 100=rama}
+		
+		
+	}
+
+}
+
+
+adding user defined object as a value object to the TreeMap:
+```````````````````````````````````````````````````````````
+package com.jse.cfw;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		SortedMap<Integer,Book> m = new TreeMap<Integer,Book>();
+		
+		//create Book Object
+		
+		Book b1 = new Book(1,"java");
+		Book b2 = new Book(2,"angular");
+		Book b3 = new Book(3,"spring");
+		
+		//adding elements to Map
+		
+		
+		
+		m.put(400,b1);
+		m.put(101, b2);
+		m.put(300, b3);
+		
+		
+		for(Map.Entry<Integer,Book> m1: m.entrySet())	
+		{
+			System.out.println(m1.getKey() + " " + m1.getValue());
+		}
+		
+	
+	}
+
+}
+
+
+
+sorting the data in our customized order:
+``````````````````````````````````````````
+package com.jse.cfw;
+
+import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
+
+public class Test9 {
+	
+	public static void main(String[] args) {
+		
+		
+		SortedMap<Book,Integer> m = new TreeMap<Book,Integer>(new BookNameComparator());
+		
+		//create Book Object
+		
+		Book b1 = new Book(1,"java");
+		Book b2 = new Book(2,"angular");
+		Book b3 = new Book(3,"spring");
+		
+		//adding elements to Map
+	
+		m.put(b1,400);
+		m.put(b2,101);
+		m.put(b3,300);
+		
+		for(Map.Entry<Book,Integer> m1: m.entrySet())	
+		{
+			System.out.println(m1.getKey() + " " + m1.getValue());
+		}
+		
+	
+	}
+
+}
+
+
+note:
+````
+this sorting happens based on the key object only not based on the value object
+that is the reason your user defined object also must be the key object.
+
+MyCompartor.java:
+`````````````````
+package com.jse.cfw;
+
+import java.util.Comparator;
+
+public class MyComparator implements Comparator<Integer> {
+
+	@Override
+	public int compare(Integer o1, Integer  o2) {
+		
+		return -o1.compareTo(o2);
+	}
+
+}
+
+BookNameComparator.java:
+````````````````````````
+package com.jse.cfw;
+
+import java.util.Comparator;
+
+public class BookNameComparator implements Comparator<Book> {
+
+	@Override
+	public int compare(Book o1, Book o2) {
+		return -o1.getBookName().compareTo(o2.getBookName());
+	}
+
+}
+
+Book.java:
+```````````
+package com.jse.cfw;
+
+public class Book {
+	
+	private int bookId;
+	private String bookName;
+	public int getBookId() {
+		return bookId;
+	}
+	public void setBookId(int bookId) {
+		this.bookId = bookId;
+	}
+	public String getBookName() {
+		return bookName;
+	}
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+	public Book(int bookId, String bookName) {
+		super();
+		this.bookId = bookId;
+		this.bookName = bookName;
+	}
+	
+	public Book()
+	{
+		
+	}
+	@Override
+	public String toString() {
+		return bookId + " " + bookName;
+	}
+	
+	
+
+}
+
+
+assignment:
+````````````
+refer about Hashtable and do one program
+
+
+  
+   
+
+ 
+
+
+
+
+
+
+
+
+
+database:
+`````````
+
+relational database management system
+
+  products
+  
+  
+  mysql
+  oracle
+  ingress
+  sybase
+  redhat.etc..
+  
+  
+try to install mysql software in your machine
+
+  https://dev.mysql.com/downloads/installer/
+
+
+basic queries in mysql:
+`````````````````````````
+create table student(stid integer, stname varchar(20));
+
+insert into student values(100,'rama');
+
+select * from student;
+
+SET SQL_SAFE_UPDATES = 0;
+update  student set stname='sitha' where stid=200;
+
+delete from student;
+
+  download mysql
+  install 
+  mysqlworkbench
+  root -root
+  
+
+jdbc:
+`````
+like how we perform db operations from db environment 
+we can perform same db operations from java environment
+
+  java to database connectivity.
+  
+  
+we have to follow some steps
+
+1.load the driver class 
+
+in db, we do have 4 types of driver clases are there
+
+ 1.type 1,2,3,& 4
+ 
+2.we need to get the connection from the db.
+
+type4 mysql driver url: 
+
+
+    Connection con =  DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","root");
+
+
+3.create the object for Statement interface
+
+    Statement st = con.createStatment();
+	
+
+4.process the quereies
+
+    int x = st.executeUpdate("insert into student values(101,'radha')");
+ 
+5.close the connection 
+
+     con.close(); 
+
+type 4 driver -> platform independent driver - > java language
+mysql db type 4 driver 
+
+   ->com.mysql.cj.jdbc.Driver
+
+
+  Class.forName("com.mysql.cj.jdbc.Driver");
+  
+   jdbc - specification /it contains only interfaces and these are 
+   given by sunmicrosystem 
+   
+    jdbc related classes/interfaces -java.sql 
+	
+	but the implementation classes are provided by different 
+	different db vendors.
+	
+	in the form of jar files
+	for example
+	
+	oracle -> ojdbc6.jar -> it contains implementation classes 
+	of jdbc interfaces
+	
+	mysql -> mysql connector.jar -> it contains implemenataion classes 
+	of jdbc interfaces.
+	
+	https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.30/
+	
+	
+	
+  
+oracle type 4 driver ->  oracle.jdbc.driver.OracleDriver
+
+
+example 
+````````
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class Test1 {
+	
+	public static void main(String[] args) throws Exception {
+		
+		
+		//load the driver class
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		System.out.println("driver class is loaded");
+		
+		//obtain the connection 
+		Connection con = DriverManager.
+		getConnection("jdbc:mysql://localhost:3306/sys", 
+				"root", "root");
+		
+		System.out.println("i got the connection ");
+		
+		//create the object for Staetment for sending sql queries to db
+		
+		Statement st = con.createStatement();
+		
+		//process the insert query
+		
+		// int x = st.executeUpdate("insert into student values(101,'radha')");
+		
+		//int x = st.executeUpdate("update student set stname='rama' where stid=100");;
+		
+		int x = st.executeUpdate("delete from student where stid=101");
+		
+		System.out.println(x + "row(s) deleted");
+		
+		//close the connection 
+		st.close();
+		con.close();
+	}
+
+}
+
+
+how to add the mysql connector.jar file to our project:
+
+ right click on project 
+ |
+ click on build path 
+ |
+ click on configure buildpath
+ |
+ click on libraries
+ |
+ select the classpath 
+ |
+ click on add external jars 
+ |
+ select the jar 
+ |
+ click on apply 
+ 
+ 
+
+example program on how to process select queries:
+```````````````````````````````````````````````````
+
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
+public class Test2 {
+	
+	public static void main(String[] args) throws Exception{
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "root");
+
+		Statement st = con.createStatement();
+		
+		ResultSet rs = st.executeQuery("select * from student");
+		
+		while(rs.next())
+		{
+			System.out.println(rs.getInt(1) + " " + rs.getString(2));
+		}
+		
+		con.close();
+		
+		
+	}
+
+}
+
+queries are of two types
+
+  1.static query
+  
+      -data is constant 
+	  -Statement 
+	  
+	  
+  2.dynamic query(pre-compiled query)
+  
+     -data is dynamic at runtime we have to pass the data 
+	 
+	 -PreparedStatement 
+	 
+	 
+  
+
+  insert into student values(100,'rama');-static query
+  
+  
+example on to process dynamic queries using PreparedStatement:
+````````````````````````````````````````````````````````````````
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
+
+public class Test3 {
+	
+	public static void main(String[] args) throws Exception {
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", 
+				"root");
+		
+		
+		//create the object of PreparedStatement
+		
+		PreparedStatement ps = con.prepareStatement("insert into student values(?,?)");
+		
+		Scanner s = new Scanner(System.in);
+		System.out.println("enter student id ");
+		int x = s.nextInt();
+		
+		System.out.println("enter student name");
+		
+		String y = s.next();
+		
+		ps.setInt(1, x);
+		ps.setString(2, y);
+		
+		int i = ps.executeUpdate();
+		
+		System.out.println(i + "row(s) inserted");
+		
+		//close the connection 
+		con.close();
+		
+	}
+
+}
+
+
+q) Statement vs PrepareStatement
+
+Statement is for processing static queries where as PreparedStatement is 
+for processing dynamic queries.
+
+
+batch processing:
+``````````````````
+
+batch:
+
+it is a group of nonselect queries and we can send these queries as a batch or 
+group from java to db for processing 
+
+so that in between java environment and db environment we can reduce to
+and fro calls. 
+
+because of this performance may increased.
+
+to group  the queries as a batch, we have to use following method.
+
+            addBatch()
+			
+to process this batch we have to use following method.
+
+           
+
+example on batchprocessing:
+````````````````````````````
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class Test4 {
+	
+	public static void main(String[] args) throws Exception {
+		
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","root");
+		
+		Statement st = con.createStatement();
+		
+		st.addBatch("insert into student values(100,'rama')");
+		st.addBatch("update student set stname='hanuman' where stid=102");
+	
+		int x[] = st.executeBatch();
+		
+		System.out.println(x[0] + "rows inserted");
+		System.out.println(x[1] + "rows updated");
+		
+		
+		
+	}
+
+}
+
+		   
+			
+ResultSetMetaData:
+
+ it is one of the predefined interface available in java.sql package 
+for the purpose of fetching the meta data of the table or any database 
+object.
+
+ to create the object for ResultSetMetaData object, first we have to create the object for ResultSet on top of this object, if we invoke 
+getMetaData()which gives you ResultSetMetaData object. 
+
+ once we get the ResultSetMetaData object, we have some predefined methods are there using those we can get the required meta information 
+based on the requirement.
+
+
+example:
+`````````
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
+
+public class Test5 {
+	
+	
+	public static void main(String[] args) {
+		try {
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys","root","root");
+		
+		Statement st =con.createStatement();
+		
+		ResultSet rs = st.executeQuery("select * from student");
+		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		
+		
+		for(int x=1;x<=rsmd.getColumnCount();x++)
+		{
+			System.out.println(rsmd.getColumnName(x) + " " + rsmd.getColumnTypeName(x) + " " + rsmd.getPrecision(x));
+		}
+		
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+
+}
+
+
+
+
+
+Transaction Management:
+`````````````````````
+transaction 
+ 
+ - do everything or do nothing 
+ 
+ i am transfering the funds from my account to 
+ my friend account 
+ 
+ debited from my account 
+ credited to your friend account
+ 
+
+example on transaction management:
+```````````````````````````````````
+package com.infotech.jdbc;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+
+public class Test6 {
+	
+	public static void main(String[] args) throws Exception  {
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/SYS","root","root");
+		con.setAutoCommit(false);
+		
+		Statement st = con.createStatement();
+		
+		int x=  st.executeUpdate("update rama set bal=bal-10000 where acno=1000");
+		int y = st.executeUpdate("update sitha set bal=bal+10000 where acno=1001");
+        
+		 if(x==1 && y==1)
+		 {
+			 con.commit();
+			 System.out.println("funds transferred succesffully");
+		 }
+			 
+		 else
+		 {
+			 con.rollback();
+			 System.out.println("please check your account number");
+		 }
+		
+		
+		
+	}
+
+}
+
+
+mysql table script:
+`````````````````````
+create table rama(acno integer, accname varchar(20), bal decimal);
+create table sitha(acno integer,accname varchar(20),bal decimal);
+insert into rama values(1000,'rama',80000);
+insert into sitha values(1001,'sitha',1000);
+select * From rama;
+select * from sitha;
+
+ 
+ jdbc: 
+  nonselect queries
+  select queries
+  Statement vs PreparedStaement
+  BatchProcessing
+  ResultSetMetaData
+  TransactionManagement
+    
   
   
   

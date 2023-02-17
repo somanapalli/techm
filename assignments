@@ -520,8 +520,39 @@ data using FileInputStream and FileOutputStream
   (use special methods of Queue interface like offer(),peek(),poll() etc..)
   
   
+day-8:
+``````
+1)write a java program on craeting any collection class object with generics 
+syntax?
 
+2)write a java program on add the user defined object to any collection class
+and display them using for each loop
 
+3)write a java program on add the user defined object to TreeSet and sort the data based on student id and studentname(assume your userdefined object 
+is Student)
+
+4)write a java program on Iterator for fetching the elements from any 
+collection object and try to apply remove() to remove the object from
+given collection object?
+
+5)write a java program on ListIterator and perform all operations 
+  like add,remove,update the objects ?
+  
+6)write a java prgrom on HashMap and observe the output?
+
+7)write a java program on TreeMap and observe the output?
+
+8)write a java program on TreeMap and try to add userdefined object as key object?(assume Student as your user defined object)
+
+   TreeMap<Student,Integer> tm = new TreeMap();
+   
+   
+9)write a java program on TreeSet and pass the Comparator object as a parameter and sort the data based on the studentname in descending order
+
+10)write a java program on jdbc for inserting,updating and deleting 
+  the data into database table?
+  
+  
 
 
 
