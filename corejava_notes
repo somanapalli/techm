@@ -6266,7 +6266,180 @@ select * from sitha;
   TransactionManagement
     
   
+ lambda expression and stream api:
+```````````````````````````````````
+Test1.java:
+```````````
+package com.techm.corejava.java8;
+@FunctionalInterface
+interface i1{
+ public int m1(int x, int y);
+}
+public class Test1 {
+	public static void main(String[] args) {	
+		hello((a,b)->a+b);
+	}
+
+	private static void hello(i1 obj)
+	{
+		System.out.println(obj.m1(2,3));
+	}
+	
+}
+
+Test2.java:
+````````````
+package com.techm.corejava.java8;
+
+import java.util.function.Function;
+
+//execution logic class
+public class Test2{
+	public static void main(String[] args) {
+		
+		Function<String,Integer> obj = (a)->a.length();
+		
+		System.out.println(obj.apply("ramatechm"));
+		
+	}
+
+	
+}
+
+ 
   
+Test3.java:
+``````````
+package com.techm.corejava.java8;
+
+import java.util.function.Consumer;
+
+public class Test3{
+
+	public static void main(String[] args) {
+		
+		Consumer<String> obj = (a)->System.out.println(a);
+	    
+		obj.accept("rama");
+	}
+	
+    
+}
+
+Test4.java:
+```````````
+package com.techm.corejava.java8;
+
+import java.time.LocalDateTime;
+import java.util.function.Supplier;
+
+public class Test4 {
+
+	public static void main(String[] args) {
+
+		Supplier<LocalDateTime> obj = () -> LocalDateTime.now();
+		System.out.println(obj.get());
+	}
+
+}
+
+Test5.java:
+```````````
+package com.techm.corejava.java8;
+
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+public class Test5 {
+	
+	public static void main(String[] args) {
+		
+		
+		ArrayList<Employee> obj = new ArrayList<Employee>();
+		
+		obj.add(new Employee(10,"rama",87000));
+		obj.add(new Employee(78,"hanuman",76000));
+		obj.add(new Employee(5,"lakshman",98000));
+		
+		obj.stream().
+		filter(p->p.getEmpsalary()>90000).collect(Collectors.toList()).forEach(System.out::println);
+		
+		
+		System.out.println("===========");
+		obj.stream().sorted(
+				(e1,e2)->e1.getEmpsalary()>e2.getEmpsalary()?-1:1).collect(Collectors.toList()).forEach(System.out::println);
+		
+		System.out.println("==========");
+		obj.stream().sorted(
+				(e1,e2)->e1.getEmpname().compareTo(e2.getEmpname())).collect(Collectors.toList()).forEach(System.out::println);
+		
+	
+		System.out.println("==========");
+		obj.stream().map((e)->e.getEmpname().toUpperCase()).collect(Collectors.toList()).forEach(System.out::println);
+	}
+
+}
+
+Employee.java:
+```````````````
+package com.techm.corejava.java8;
+
+public class Employee {
+	
+	private int empid;
+	private String empname;
+	private int empsalary;
+	public int getEmpid() {
+		return empid;
+	}
+	public void setEmpid(int empid) {
+		this.empid = empid;
+	}
+	public String getEmpname() {
+		return empname;
+	}
+	public void setEmpname(String empname) {
+		this.empname = empname;
+	}
+	public double getEmpsalary() {
+		return empsalary;
+	}
+	public void setEmpsalary(int empsalary) {
+		this.empsalary = empsalary;
+	}
+	public Employee(int empid, String empname, int empsalary) {
+		super();
+		this.empid = empid;
+		this.empname = empname;
+		this.empsalary = empsalary;
+	}
+	@Override
+	public String toString() {
+		return "Employee [empid=" + empid + ", empname=" + empname + ", empsalary=" + empsalary + "]";
+	}
+	
+	
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
   
   
   
