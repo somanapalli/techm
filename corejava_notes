@@ -6421,6 +6421,283 @@ public class Employee {
 	
 
 }
+ServletConfig using annotation:
+``````````````````````````````
+package com.techm;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Test1
+ */
+@WebServlet(urlPatterns = "/display",
+initParams = @WebInitParam(name="driver",value="com.mysql.cj.jdbc.Driver"))
+public class Test1 extends HttpServlet {
+	
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//response.getWriter().println("<h1> welcome to servlets using webservlet annotation</h1>");
+		
+		response.getWriter().println(getServletConfig().getInitParameter("driver"));
+		
+		
+		//response.setContentType("application/msword");
+		//response.getWriter().println("welcome to msword");
+		
+	}
+
+}
+
+
+adding the data to different scopes example:
+````````````````````````````````````````````````
+Servlet1.java:
+``````````````
+package com.techm;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet1
+ */
+@WebServlet("/Servlet1")
+public class Servlet1 extends HttpServlet {
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		//request.setAttribute("driver", "com.mysql.cj.jdbc.Driver");
+		getServletContext().setAttribute("driver", "com.mysql.cj.jdbc.Driver");
+		//request.getSession().setAttribute("driver", "com.mysql.cj.jdbc.Driver");
+		response.getWriter().println("<a href = 'Servlet2'>Visit</a>");
+	}
+
+}
+
+Servlet2.java:
+```````````````
+package com.techm;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class Servlet2
+ */
+@WebServlet("/Servlet2")
+public class Servlet2 extends HttpServlet {
+		public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+			response.getWriter().println(getServletContext().getAttribute("driver"));
+	}
+
+}
+
+RequestDispatcher example:
+`````````````````````````
+index.html:
+```````````
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+ <form action="FirstServlet">
+ 
+ Enter user name: <input type="text" name="t1"/><br/>
+ <input type="submit" value="send"/>
+ 
+ </form>
+</body>
+</html>
+
+FirstServlet.java:
+```````````````````
+package com.techm;
+
+import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class FirstServlet
+ */
+@WebServlet("/FirstServlet")
+public class FirstServlet extends HttpServlet {
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uname = request.getParameter("t1");
+		
+		
+		
+		
+		if(uname.equals("techm")) {
+			RequestDispatcher rd = request.getRequestDispatcher("/SecondServlet");
+		
+		rd.forward(request, response);
+		}
+		else
+		{
+			response.getWriter().println("sorry username or password error");
+			RequestDispatcher rd = request.getRequestDispatcher("/index.html");	
+			rd.include(request, response);
+		}
+		
+	}
+
+}
+
+SecondServlet.java:
+````````````````````
+package com.techm;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class SecondServlet
+ */
+@WebServlet("/SecondServlet")
+public class SecondServlet extends HttpServlet {
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String uname = request.getParameter("t1");
+		response.getWriter().println("user name is : " + uname);
+	}
+}
+
+
+Registration example :
+````````````````````````
+register.html:
+``````````````
+<html>  
+<body>  
+<form action="register" method="post">  
+  
+Name:<input type="text" name="userName"/><br/><br/>  
+Password:<input type="password" name="userPass"/><br/><br/>  
+Email Id:<input type="text" name="userEmail"/><br/><br/>  
+Country:  
+<select name="userCountry">  
+<option>India</option>  
+<option>Pakistan</option>  
+<option>other</option>  
+</select>  
+  
+<br/><br/>  
+<input type="submit" value="register"/>  
+  
+</form>  
+</body>  
+</html>  
+
+Register.java:
+````````````````
+package com.techm;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+@WebServlet("/register")
+public class Register extends HttpServlet {
+	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+
+		String n = request.getParameter("userName");
+		String p = request.getParameter("userPass");
+		String e = request.getParameter("userEmail");
+		String c = request.getParameter("userCountry");
+
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/sys", "root", "root");
+
+			PreparedStatement ps = con.prepareStatement("insert into registeruser values(?,?,?,?)");
+
+			ps.setString(1, n);
+			ps.setString(2, p);
+			ps.setString(3, e);
+			ps.setString(4, c);
+
+			int i = ps.executeUpdate();
+			if (i > 0)
+				out.print("You are successfully registered...");
+
+		} catch (Exception e2) {
+			System.out.println(e2);
+		}
+
+		out.close();
+	}
+
+}
+note:
+`````
+make sure add mysqlconnector jar file to the buildpath of the project and 
+lib folder to escape from both compile time error and runtime error otherwise it gives you ClassNotFoundException .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
