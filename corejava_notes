@@ -8058,6 +8058,604 @@ public class EmployeeRowMapper implements RowMapper<Employee> {
 }
 
 
+spring web mvc module:
+``````````````````````
+using this module, we are able to develop web applications.
+
+flow:
+`````
+->explained daigram
+
+
+
+1.create maven project by chooseing web-app archetype
+2.right click on the project -> go to properties -> target runtime -> add server
+3.open pom.xml and add spring web mvc dependecy
+4.configure the DispatcherServlet class in web.xml file
+5.create controller class under src/main/java under one package(com.sopra.controller)
+  make sure controller class must be annotated with @Controller annotation.
+ 
+6.we configure view resolver class in spring configuration file
+  (InternalResourceViewResolver), 
+  note: spring configuration file must be followed one naming conventions
+        <servlet-name>-servlet.xml
+        ex: dispatcher-servlet.xml	
+  
+7.place the view page inside one location(WEB-INF/views/display.jsp)
+8.run the application on top of server and pass the correct url so that
+  our view page will be rendered.
+  
+
+HelloController.java:
+`````````````````````
+package com.sopra.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class HelloController {
+	
+	@RequestMapping("/hello")
+	public ModelAndView hello()
+	{
+		
+		ModelAndView mv = new ModelAndView();
+		
+		//setting the view name
+		 mv.setViewName("hello");
+		    
+		return mv;
+		
+	}
+
+}
+
+web.xml:
+````````
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+  <servlet>
+  
+     <servlet-name>spring</servlet-name>
+     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  
+      <servlet-name>spring</servlet-name>
+      <url-pattern>/</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+spring-servlet.xml:
+```````````````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+  
+<context:component-scan base-package="com.sopra"></context:component-scan>
+  
+  <bean id="view" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+  
+    <property name="prefix">
+    
+       <value>/WEB-INF/jsp/</value>
+    
+    </property>
+    
+    <property name="suffix">
+       
+       <value>.jsp</value>
+    
+    </property>
+  
+  
+  </bean>
+  
+
+</beans>
+
+
+hello.jsp:
+`````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>welcome to spring web mvc</h1>
+</body>
+</html>
+
+note:
+`````
+don't forget to add the server to the spring web application.
+
+   ->right click on project -> click on properties -> add target runtime
+   ->add the server.
+   
+   
+   
+how to add the data to ModelAndView object:
+```````````````````````````````````````````
+HelloController.java:
+````````````````````
+package com.sopra.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class HelloController {
+	
+	@RequestMapping("/hello")
+	public ModelAndView hello()
+	{
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("stid",100);
+		mv.addObject("stname","ram");
+		mv.addObject("staddress","hyd");
+		
+		
+		
+		//setting the view name
+		 mv.setViewName("hello");
+		    
+		return mv;
+		
+	}
+
+}
+
+
+hello.jsp:
+``````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>welcome to spring web mvc</h1><br/>
+Student id: ${stid}<br/>
+Student name: ${stname} <br/>
+Student address: ${staddress}
+
+</body>
+</html>
+
+
+
+how to add the java object to ModelAndView and make it displayed in view page:
+````````````````````````````````````````````````````````````````````````````````
+HelloController.java:
+`````````````````````
+package com.sopra.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sopra.beans.Student;
+
+@Controller
+public class HelloController {
+	
+	@RequestMapping("/hello")
+	public ModelAndView hello()
+	{
+		
+		ModelAndView mv = new ModelAndView();
+		
+		Student stu = new Student();
+		
+		stu.setStid(100);
+		stu.setStname("Ram");
+		
+		
+		mv.addObject("student", stu);
+		
+		
+		//setting the view name
+		 mv.setViewName("hello");
+		    
+		return mv;
+		
+	}
+
+}
+
+hello.jsp:
+```````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>welcome to spring web mvc</h1><br/>
+Student Information: <br/>
+${student}
+</body>
+</html>
+
+how to add the List of java objects to ModelAndView and displayed in view page:
+```````````````````````````````````````````````````````````````````````````````
+HelloController.java:
+``````````````````````
+
+package com.sopra.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sopra.beans.Student;
+
+@Controller
+public class HelloController {
+	
+	@RequestMapping("/hello")
+	public ModelAndView hello()
+	{
+		List<Student> students = new ArrayList<Student>();
+		
+		
+		ModelAndView mv = new ModelAndView();
+		
+		Student stu1 = new Student();
+		stu1.setStid(100);
+		stu1.setStname("Ram");
+		
+		
+		Student stu2 = new Student();
+		stu2.setStid(200);
+		stu2.setStname("sopra");
+		
+		
+		students.add(stu1);
+		students.add(stu2);
+		
+		
+		mv.addObject("students",students);
+		
+		
+		//setting the view name
+		 mv.setViewName("hello");
+		    
+		return mv;
+		
+	}
+
+}
+
+
+hello.jsp:
+```````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>welcome to spring web mvc</h1><br/>
+Student Information: <br/>
+${students}
+</body>
+</html>
+
+
+how to send the data from view to controller and then controller to view:
+```````````````````````````````````````````````````````````````````````````
+RegistrationController.java:
+```````````````````````````
+package com.sopra.controllers;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sopra.beans.Student;
+
+@Controller
+public class RegistrationController {
+	
+	@RequestMapping("/showreg")
+	public ModelAndView showRegistrationPage()
+	{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("userReg");
+		return mv;
+		
+	}
+	
+	@RequestMapping(value="/registerUser",method = RequestMethod.POST)
+	public ModelAndView registerStudent(HttpServletRequest request,HttpServletResponse response)
+	{
+		
+		String stid = request.getParameter("stid");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		
+		Student stu = new Student();
+		stu.setStid(Integer.parseInt(stid));
+		stu.setFirstName(firstName);
+		stu.setLastName(lastName);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("stu", stu);
+		mv.setViewName("success");
+		
+		return mv;
+		
+		
+	}
+	
+	
+	
+
+}
+
+Student.java:
+`````````````
+package com.sopra.beans;
+
+public class Student {
+	
+	private int stid;
+	private String firstName;
+	private String lastName;
+	
+	public Student()
+	{
+		
+	}
+
+	public int getStid() {
+		return stid;
+	}
+
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	@Override
+	public String toString() {
+		return "Student [stid=" + stid + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+	
+	
+
+}
+
+userReg.jsp:
+`````````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+  <h2>Registration page</h2>
+  <form action="registerUser" method="post">
+  
+     <pre>
+      Enter Student Id: <input type="text" name="stid"/><br/>
+      Enter Student FirstName: <input type="text" name="firstName"/><br/>
+      Enter Student LastName: <input type="text" name="lastName"/><br/>
+      <input type="submit" value="register"/>
+      
+     
+     </pre>
+  
+  </form>
+
+</body>
+</html>
+
+success.jsp:
+`````````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+Students Records are: <br/>
+${stu}
+</body>
+</html>
+
+
+ 
+  assignment:
+  ```````````
+    on top of this application apply spring jdbc module to store
+	student's data in the corresponding student table of db.
+	
+
+RegistrationController.java:
+````````````````````````````
+package com.sopra.controllers;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sopra.beans.Student;
+import com.sopra.dao.StudentDao;
+
+@Controller
+public class RegistrationController {
+	
+	
+	@Autowired
+	private StudentDao dao;
+
+	@RequestMapping("/showreg")
+	public ModelAndView showRegistrationPage()
+	{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("userReg");
+		return mv;
+		
+	}
+	
+	/*1st approach
+	 
+	 * @RequestMapping(value="/registerUser",method = RequestMethod.POST)
+	public ModelAndView registerStudent(HttpServletRequest request,HttpServletResponse response)
+	{
+		
+		String stid = request.getParameter("stid");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		
+		Student stu = new Student();
+		stu.setStid(Integer.parseInt(stid));
+		stu.setFirstName(firstName);
+		stu.setLastName(lastName);
+		
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("stu", stu);
+		mv.setViewName("success");
+		
+		return mv;
+		
+		
+	}
+	
+	 */
+	
+	
+	
+	
+	
+	/* 2nd approach
+	 * @RequestMapping(value="/registerUser",method = RequestMethod.POST) public
+	 * ModelAndView registerStudent(@RequestParam("stid") int stid ,
+	 * 
+	 * @RequestParam("firstName") String firstName,
+	 * 
+	 * @RequestParam("lastName") String lastName) {
+	 * 
+	 * Student stu = new Student(); stu.setStid(stid); stu.setFirstName(firstName);
+	 * stu.setLastName(lastName);
+	 * 
+	 * 
+	 * dao.register(stu);
+	 * 
+	 * ModelAndView mv = new ModelAndView();
+	 * 
+	 * mv.setViewName("success");
+	 * 
+	 * return mv;
+	 * 
+	 * 
+	 * }
+	 */
+	
+	@RequestMapping(value="/registerUser",method = RequestMethod.POST)
+	public ModelAndView registerStudent(@ModelAttribute("stu") Student x)
+	{
+		
+		/*
+		 * 
+		 * 1.it will take the form parameter values and bind it to Student model class properties
+		 *   by creating the Student class object
+		 * 2. we no need to add the object to model also
+		 * 
+		 * 
+		 */
+	
+	    dao.register(x);
+		
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("success");
+		
+		return mv;
+		
+		
+	}
+	
+	
+	
+	
+
+}
+
 
 
 
