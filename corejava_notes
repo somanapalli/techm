@@ -8657,6 +8657,1923 @@ public class RegistrationController {
 }
 
 
+                           HIBERNATE
+						   
+						   
+Hibernate:
+```````````
+
+hibernate is a orm framework
+
+orm:
+
+  object relational mapping
+  
+   dealing with java object --> database table
+   
+      1 object --> 1 row of the table
+
+instead of working on sql queries we can peform on top of our entity 
+class.
+
+   bean class
+   entity class
+   
+   
+  hibernate: to implment persistence logic
+  
+   jdbc 
+   spring jdbc
+      
+	    ->
+   
+   
+    hibernate
+	hibernate architecutre includes many objects
+	
+	 -persistence object
+	 -session factory
+	 -transaction factory
+	 -connection factory
+	 -session 
+	 -transaction
+	 ....
+	 
+
+steps to follow to develop hibernate application:
+`````````````````````````````````````````````````
+1.create the maven project 
+2.add the hibernate core maven dependecy in pom.xml
+3.under src/main/java right click -> new -> xml file(student.hbm.xml file)
+4.under src/main/java right click -> new -> xml file(hibernate.cfg.xml)
+5.under src/main/java create two packages (com.sopra.entity --> entity class, 
+  com.sopra-> test class)
+
+6.prepare entity class
+7.prepare test class
+8.run the application and check the db
+
+
+
+pom.xml:
+````````
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.sopra</groupId>
+  <artifactId>hibernate-demo-1</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>hibernate-demo-1</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-core</artifactId>
+    <version>5.5.7.Final</version>
+</dependency>
+    
+  </dependencies>
+</project>
+
+
+student.hbm.xml:
+````````````````
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+<class name="com.sopra.entity.Student" table="student">
+       
+       <id name="stid">
+            <generator class="assigned"></generator>
+       </id>
+       <property name="firstName"></property>
+       <property name="lastName"></property>
+       
+       
+</class>
+
+
+</hibernate-mapping>
+
+hibernate.cfg.xml:
+`````````````````````
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+
+ <session-factory>
+	<!-- data base properties -->
+	<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+	<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+	<property name="connection.username">sopra</property>
+	<property name="connection.password">sopra</property>
+
+<!-- hibernate properties -->
+	<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+	 <property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	
+	<!-- mapping file -->
+	<mapping resource="student.hbm.xml"/>
+	</session-factory>
+
+</hibernate-configuration>
+
+Student.java:
+`````````````
+package com.sopra.entity;
+
+public class Student {
+	
+	 private int stid;
+	 private String firstName;
+	 private String lastName;
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	 
+	 public Student()
+	 {
+		 
+	 }
+
+}
+
+Test.java:
+``````````
+ package com.sopra;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import com.sopra.entity.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	public static void main(String[] args) {
+
+		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+		Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+		SessionFactory factory = meta.getSessionFactoryBuilder().build();
+
+		Session session = factory.openSession();
+
+		Transaction transaction = session.beginTransaction();
+
+		Student stu = new Student();
+		stu.setStid(102);
+		stu.setFirstName("ram");
+		stu.setLastName("s");
+
+		  session.save(stu);
+
+		transaction.commit();
+
+		System.out.println("successfully saved");
+		factory.close();
+		session.close();
+
+	}
+}
+
+
+ note:
+ ````
+ right click on the project, add ojdbc jar file for our database.
+ 
+ 
+ same application using @Entity and without student.hbm.xml:
+ ````````````````````````````````````````````````````````````
+ Student.java:
+ `````````````
+ package com.sopra.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+//@Table(name = "student")
+public class Student {
+	
+	 @Id
+	 //@Column(name = "stid")
+	 private int stid;
+	 
+	// @Column(name="firstName")
+	 private String firstName;
+	 
+	 //@Column(name="lastName")
+	 private String lastName;
+	 
+	 
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	 
+	 public Student()
+	 {
+		 
+	 }
+
+}
+
+
+note:
+``````
+jpa is the specification/interfaces for orm(object relational mapping)
+-sunmicrosystem
+
+-hibernate is the popular one
+-ibatis
+-toplink
+
+
+hibernate.cfg.xml:
+``````````````````
+
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+
+ <session-factory>
+	<!-- data base properties -->
+	<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+	<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+	<property name="connection.username">sopra</property>
+	<property name="connection.password">sopra</property>
+
+<!-- hibernate properties -->
+	<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+	 <property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	<property name="hbm2ddl.auto">create</property>
+	
+	<!-- mapping file -->
+	<mapping class="com.sopra.entity.Student"/>
+	</session-factory>
+
+</hibernate-configuration>
+
+
+
+cretae vs update of hbm2ddl.auto value:
+```````````````````````````````````````
+create:`
+```````
+when we give this property value as create, it will always drop the existing
+table and it will create the new table.
+
+update:
+```````
+when we give this property value as update, it will not drop the existing
+table just it will perform the operations on top of the existing table.
+
+
+
+Generation strategies:
+`````````````````````
+
+Hibernate internally generated values for primary key columns based on 
+some strategies.
+
+  Auto
+   IDENTITY-MYSQL (TABLE - PK COLUMN, AUTO INCREMENT)
+  SEQUENCE
+  Table
+  
+  
+Student.java:
+``````````````
+package com.sopra.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenericGenerator;
+
+
+@Entity
+//@Table(name = "student")
+@Table(name="student_generator")
+public class Student {
+	
+	 @Id
+	 //@Column(name = "stid")
+	 //@GeneratedValue(strategy = GenerationType.AUTO)
+	 @GenericGenerator(name="stu_id", strategy = "com.sopra.entity.CustomGenerator")
+	 @GeneratedValue(generator = "stu_id")
+	 private String stid;
+	 
+	// @Column(name="firstName")
+	 private String firstName;
+	 
+	 //@Column(name="lastName")
+	 private String lastName;
+	 
+	 
+	public String getStid() {
+		return stid;
+	}
+	public void setStid(String stid) {
+		this.stid = stid;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	 
+	 public Student()
+	 {
+		 
+	 }
+
+}
+
+
+custom generator:
+``````````````````
+we can apply the custom generator also for this we have
+to define one java class that must be implements from 
+IdentifierGenerator and then we can override generate() with our own custom
+generator logic and then we can apply this strategy in our model class.
+
+
+CustomGenerator.java:
+```````````````````````
+package com.sopra.entity;
+
+import java.io.Serializable;
+import java.util.Random;
+
+import org.hibernate.HibernateException;
+import org.hibernate.engine.spi.SharedSessionContractImplementor;
+import org.hibernate.id.IdentifierGenerator;
+
+public class CustomGenerator implements IdentifierGenerator {
+
+	public Serializable generate(SharedSessionContractImplementor session, Object object) throws HibernateException {
+		
+		int id=0;
+		Random random = new Random();
+		
+		
+		id=random.nextInt(1000);
+		
+		
+		return "stu-" + id;
+		
+		
+	}
+
+}
+
+
+hibernate web application (hibernate + jsp integration):
+```````````````````````````````````````````````````````
+index.jsp:
+```````````
+<html>
+<body>
+
+<form action="process.jsp" method="post">
+
+Student's First Name: <input type="text" name="firstName"/><br/>
+Student's Last Name: <input type="text" name="lastName"/><br/>
+<input type="submit" value="register"/>
+
+
+</form>
+
+
+
+
+</body>
+</html>
+
+process.jsp:
+````````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    import="com.sopra.dao.StudentDao"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<jsp:useBean id="stu" class="com.sopra.entity.Student"></jsp:useBean>
+
+<jsp:setProperty property="*" name="stu"/>
+
+
+<%
+
+int x = StudentDao.register(stu);
+
+if(x>0)
+{
+	out.println("successfully registered");
+}
+
+%>
+
+
+</body>
+</html>
+
+hibernate.cfg.xml:
+```````````````````
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+
+ <session-factory>
+	<!-- data base properties -->
+	<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+	<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+	<property name="connection.username">sopra</property>
+	<property name="connection.password">sopra</property>
+
+<!-- hibernate properties -->
+	<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+	 <property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	<property name="hbm2ddl.auto">create</property>
+	
+	<!-- mapping file -->
+	<mapping class="com.sopra.entity.Student"/>
+	</session-factory>
+
+</hibernate-configuration>
+
+Student.java:
+`````````````
+package com.sopra.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.hibernate.annotations.GenericGenerator;
+
+@Entity
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int stid;
+	
+	private String firstName;
+	private String lastName;
+	
+	
+	public int getStid() {
+		return stid;
+	}
+	public void setStid(int stid) {
+		this.stid = stid;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public Student()
+	{
+		
+	}
+	
+
+}
+
+StudentDao.java:
+````````````````
+package com.sopra.dao;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import com.sopra.entity.Student;
+
+public class StudentDao {
+	
+	public static int register(Student st)
+	{
+		
+		
+		int i=0;
+		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+		Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+		SessionFactory factory = meta.getSessionFactoryBuilder().build();
+
+		Session session = factory.openSession();
+
+		Transaction transaction = session.beginTransaction();
+		
+		
+	    i = (Integer)session.save(st);
+	    transaction.commit();
+	    
+		factory.close();
+		session.close();
+		
+		return i;
+		
+	}
+
+}
+
+
+
+
+
+
+note:
+``````
+make sure add ojdbc jar to the buildpath and lib folder of project
+
+Hibernate inheritance mapping:
+````````````````````````````
+
+->there are three inheritance mapping strategies are there
+
+   1.table per hierarchy
+   2.table per concrete class
+   3.table per subclass
+   
+1.table per hierarchy:
+``````````````````````
+ in table per hierarchy single table is required to map the whole hierarchy
+ 
+ an extra column is added to the the table to identify the class.
+ 
+ null values are stored in the table.
+ 
+2.table per concrete class:
+````````````````````````````
+in case of table per concrete class, tables are created as per class.
+But duplicate column added in subclass tables.
+
+3.table per subclass:
+`````````````````````
+in this strategy, tables are created as per class but related by 
+foregin key.
+
+so there are no duplicate columns.
+
+
+
+ Employee emp = new Employee();
+ emp.setName("ram");
+ 
+ Regular_Employee re = new Regular_Employee();
+ re.setName("jain");
+ re.setSalary(70000);
+ re.setBonus(678);
+ 
+ Contract_Employee ce = new Contract_Employee();
+ ce.setName("rk");
+ ce.setPay_per_hour(8000);
+ ce.setContract_duration("9 hours");
+ 
+ type
+ `````
+ employee
+ regularemployee
+ contractemployee
+ 
+Employee.java:
+`````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type",discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorValue("employee")
+public class Employee {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private String name;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
+}
+
+Regular_Employee.java:
+``````````````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("regularemployee")
+public class Regular_Employee extends Employee {
+	
+	private float salary;
+	private int bonus;
+	public float getSalary() {
+		return salary;
+	}
+	public void setSalary(float salary) {
+		this.salary = salary;
+	}
+	public int getBonus() {
+		return bonus;
+	}
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
+	
+
+}
+
+Contract_Employee.java:
+```````````````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue("contractemployee")
+public class Contract_Employee extends Employee {
+
+	
+	  private float pay_per_hour;
+	  private String contract_duration;
+	  
+	  
+	public float getPay_per_hour() {
+		return pay_per_hour;
+	}
+	public void setPay_per_hour(float pay_per_hour) {
+		this.pay_per_hour = pay_per_hour;
+	}
+	public String getContract_duration() {
+		return contract_duration;
+	}
+	public void setContract_duration(String contract_duration) {
+		this.contract_duration = contract_duration;
+	}
+	  
+	  
+	  
+	  
+}
+
+
+App.java:
+``````````
+package com.sopra;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+import com.sopra.entities.Contract_Employee;
+import com.sopra.entities.Employee;
+import com.sopra.entities.Regular_Employee;
+
+
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	public static void main(String[] args) {
+
+		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+		Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+		SessionFactory factory = meta.getSessionFactoryBuilder().build();
+
+		Session session = factory.openSession();
+
+		Transaction transaction = session.beginTransaction();
+
+		Employee emp = new Employee();
+		emp.setName("Ram");
+		
+		Regular_Employee re = new Regular_Employee();
+		re.setName("jain");
+		re.setSalary(778787f);
+		re.setBonus(678);
+		
+		Contract_Employee ce = new Contract_Employee();
+		ce.setName("xyz");
+		ce.setPay_per_hour(676);
+		ce.setContract_duration("8hours");
+		
+		
+		
+        session.save(emp);
+        session.save(re);
+        session.save(ce);
+        
+		transaction.commit();
+
+		System.out.println("successfully saved");
+		factory.close();
+		session.close();
+
+	}
+}
+
+hibernate.cfg.xml:
+``````````````````
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+
+ <session-factory>
+	<!-- data base properties -->
+	<property name="connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+	<property name="connection.url">jdbc:oracle:thin:@localhost:1521:xe</property>
+	<property name="connection.username">sopra</property>
+	<property name="connection.password">sopra</property>
+
+<!-- hibernate properties -->
+	<property name="dialect">org.hibernate.dialect.Oracle9Dialect</property>
+	 <property name="show_sql">true</property>
+	<property name="format_sql">true</property>
+	<property name="hbm2ddl.auto">create</property>
+	
+	<!-- mapping file -->
+	<mapping class="com.sopra.entities.Employee"/>
+	<mapping class="com.sopra.entities.Regular_Employee"/>
+	<mapping class="com.sopra.entities.Contract_Employee"/>
+	</session-factory>
+
+</hibernate-configuration>
+table per concrete class strategie:
+```````````````````````````````````
+Employee.java:
+``````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Employee {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private String name;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
+	
+
+}
+
+Regular_Employee.java:
+```````````````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+
+public class Regular_Employee extends Employee {
+	
+	private float salary;
+	private int bonus;
+	public float getSalary() {
+		return salary;
+	}
+	public void setSalary(float salary) {
+		this.salary = salary;
+	}
+	public int getBonus() {
+		return bonus;
+	}
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
+	}
+	
+
+}
+
+Contract_Employee.java:
+```````````````````````
+package com.sopra.entities;
+
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+
+public class Contract_Employee extends Employee {
+
+	
+	  private float pay_per_hour;
+	  private String contract_duration;
+	  
+	  
+	public float getPay_per_hour() {
+		return pay_per_hour;
+	}
+	public void setPay_per_hour(float pay_per_hour) {
+		this.pay_per_hour = pay_per_hour;
+	}
+	public String getContract_duration() {
+		return contract_duration;
+	}
+	public void setContract_duration(String contract_duration) {
+		this.contract_duration = contract_duration;
+	}
+	  
+	  
+	  
+	  
+}
+
+
+
+assignment:
+````````````
+table per sub class strategy
+
+hibernate query language:
+```````````````````````
+hibernate query language -> sql
+
+but it doesn't depends on table of the database 
+
+it is depending on entity class name and it's properties 
+
+so hql -> data base independent query lanugage
+
+Query interface:
+````````````````
+it is an object oriented representation of hibernate query.
+
+the object of Query can be obtained -> createQuery() of Session interface
+
+   executeUpdate()- execute update /delete
+   list()
+   setFirstResult(int rowno)
+   
+   
+example:
+````````
+package com.sopra;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
+import com.sopra.entity.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	public static void main(String[] args) {
+
+		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+		Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+		SessionFactory factory = meta.getSessionFactoryBuilder().build();
+
+		Session session = factory.openSession();
+
+		Transaction transaction = session.beginTransaction();
+
+		Query query = session.createQuery("from Student");
+		query.setFirstResult(0);
+		query.setMaxResults(3);
+		
+        List list = query.list();
+        System.out.println(list);
+        
+		transaction.commit();
+
+		System.out.println("successfully saved");
+		factory.close();
+		session.close();
+
+	}
+}
+
+update query using hql:
+````````````````````````
+package com.sopra;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.query.Query;
+
+import com.sopra.entity.Student;
+
+/**
+ * Hello world!
+ *
+ */
+public class App {
+	public static void main(String[] args) {
+
+		StandardServiceRegistry ssr = new StandardServiceRegistryBuilder().configure("hibernate.cfg.xml").build();
+
+		Metadata meta = new MetadataSources(ssr).getMetadataBuilder().build();
+
+		SessionFactory factory = meta.getSessionFactoryBuilder().build();
+
+		Session session = factory.openSession();
+
+		Transaction transaction = session.beginTransaction();
+
+		
+		Query query = session.createQuery("update Student set firstName=:fn where stid=:id");
+		
+		query.setParameter("fn","verma");
+		query.setParameter("id", 1);
+		
+		
+		
+		int status = query.executeUpdate();
+        
+		transaction.commit();
+
+		System.out.println("successfully updated");
+		factory.close();
+		session.close();
+
+	}
+}
+
+spring and hibernate integration:
+``````````````````````````````````
+spring orm module:
+``````````````````
+
+  spring orm module -> 1 line of code
+  
+  
+->in hibernate f/w, we provide all the database information in 
+  hibernate.cfg.xml
+  
+->But if we are going to integrate the hibernation with spring 
+we don't need to create the hibernate.cfg.xml
+we can provide all this information in spring configuration file.
+
+
+
+
+advantages of spring f/w with hibernate:
+````````````````````````````````````````
+the spring f/w provides HibernateTemplate class, so you don't need to follow
+so many steps like creating configuration , buildsessionfactory,
+session,beginning and commiting transaction etc.
+
+->so it saves a lot of code.
+
+   Student stu = new Student(100,"ram","sopra");
+   hibernateTemplate.save(stu);
+   
+spring orm crud use case:
+``````````````````````````
+1.create a table in the database
+   -it is optional
+   
+2.create a spring configuration file(springcontext.xml)
+  -it contains information of SessionFactory,DataSource...
+  
+3.Create Student.java file
+   -it is the persistent class/entity class/model class
+   
+4.create StudentDao.java
+   -it is the dao class that uses HibernateTemplate 
+
+5.create Test file
+   -it calls methods of EmployeeDao 
+   
+   
+Student.java:
+```````````````
+package com.sopra.beans;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Student {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private String firstName;
+	private String lastName;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + "]";
+	}
+	
+	
+
+}
+
+StudentDao.java:
+````````````````
+
+package com.sopra.dao;
+
+import com.sopra.beans.Student;
+
+public interface StudentDao {
+	
+	int saveStudent(Student student);
+	
+
+}
+
+
+StudentDaoImpl.java:
+`````````````````````
+package com.sopra.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sopra.beans.Student;
+
+
+public class StudentDaoImpl implements StudentDao {
+
+	@Autowired
+	private HibernateTemplate template;
+	
+	
+	public HibernateTemplate getTemplate() {
+		return template;
+	}
+
+
+	public void setTemplate(HibernateTemplate template) {
+		this.template = template;
+	}
+
+
+	@Transactional
+	public int saveStudent(Student student) {
+		
+		Integer result=(Integer)template.save(student);
+		
+		return result;
+	}
+
+}
+
+
+Test.java:
+```````````
+package com.sopra;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.sopra.beans.Student;
+import com.sopra.dao.StudentDao;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+   public static void main(String[] args) {
+	
+	   
+	   ApplicationContext context = new ClassPathXmlApplicationContext("springcontext.xml");
+	   
+	   StudentDao dao = (StudentDao)context.getBean("dao");
+	   
+	   Student stu = new Student();
+	   stu.setFirstName("ram");
+	   stu.setLastName("sopra");
+	   
+	   int x = dao.saveStudent(stu);
+	   System.out.println(x + "row(s) inserted");
+}
+}
+
+
+
+springcontext.xml:
+```````````````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+     <tx:annotation-driven/>
+     <context:component-scan base-package="com.sopra"></context:component-scan>
+
+	<bean id="dao" class="com.sopra.dao.StudentDaoImpl">
+
+		<property name="template" ref="template" />
+
+	</bean>
+
+	<bean id="template"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+
+		<property name="sessionFactory" ref="mySessionFactory" />
+	</bean>
+
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<property name="annotatedClasses">
+			<list>
+				<value>com.sopra.beans.Student</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+
+			<props>
+			    <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+
+			</props>
+
+		</property>
+
+	</bean>
+
+
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="sopra" />
+		<property name="password" value="sopra" />
+
+	</bean>
+
+
+    <bean class="org.springframework.orm.hibernate5.HibernateTransactionManager" name="transactionManager">
+    
+         <property name="sessionFactory" ref="mySessionFactory"/>
+    
+    </bean>
+
+
+
+</beans>
+
+pom.xml:
+````````
+    ->spring context
+	->hibernate core
+	->spring orm 
+	
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.sopra</groupId>
+	<artifactId>spring-orm-deom</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>spring-orm-deom</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>5.3.10</version>
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.5.7.Final</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>5.3.10</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+
+
+	</dependencies>
+</project>
+
+
+
+spring web mvc application w.r.to java based configuration:
+````````````````````````````````````````````````````````````
+
+index.jsp:
+`````````
+<html>
+<body>
+
+<form action="greet">
+<input type="submit" value="press to greet">
+
+</form>
+</body>
+</html>
+
+
+GreetController.java:
+````````````````````
+package com.sopra.web;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@Controller
+public class GreetController {
+	
+	@RequestMapping("/greet")
+	public ModelAndView showView()
+	{
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("result");
+		mv.addObject("res","Sopra welcomes you to Spring");
+		
+		return mv;
+	}
+
+}
+
+MyConfig.java:
+`````````````
+package com.sopra.web;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+
+@Configuration
+public class MyConfig implements WebMvcConfigurer {
+
+	
+	@Bean
+	public ViewResolver view()
+	{
+		InternalResourceViewResolver ivr = new InternalResourceViewResolver();
+		ivr.setPrefix("/WEB-INF/jsps/");
+		ivr.setSuffix(".jsp");
+		return ivr;
+	}
+	
+}
+
+WebInitializer.java:
+````````````````````
+package com.sopra.web;
+
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+	@Override
+	protected Class<?>[] getRootConfigClasses() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Class<?>[] getServletConfigClasses() {
+		// TODO Auto-generated method stub
+		return new Class[] {MyConfig.class};
+	}
+
+	@Override
+	protected String[] getServletMappings() {
+		// TODO Auto-generated method stub
+		return new String[] {"/"};
+	}
+
+}
+
+
+result.jsp:
+```````````
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"
+    isELIgnored="false"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+ ${res}
+</body>
+</html>
+
+
+
+
+assignment:
+```````````
+registration application:
+
+  spring web mvc module
+  spring orm module
+  
+    register 
+	
+	java based configuration
+	
+	
+spring orm mvc registration application:
+`````````````````````````````````````````
+EmployeeController.java:
+```````````````````````
+package com.sopra.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.sopra.entity.Employee;
+import com.sopra.service.EmployeeService;
+
+@Controller
+public class EmployeeController {
+
+	 @Autowired
+	 private EmployeeService service;
+	 
+	 public EmployeeService getService() {
+		return service;
+	}
+
+	public void setService(EmployeeService service) {
+		this.service = service;
+	}
+
+	@RequestMapping("registrationPage")
+		public String showRegistrationPage() {
+			return "userReg";
+		}
+
+	
+		@RequestMapping(value = "registerUser", method = RequestMethod.POST)
+		public ModelAndView registerUser(@RequestParam("empid") int empid,@RequestParam("firstName") String firstName,@RequestParam("lastName") String lastName ) {
+			
+			Employee emp = new Employee();
+			emp.setId(empid);
+			emp.setFirstName(firstName);
+			emp.setLastName(lastName);
+			
+			
+			int result = service.save(emp);
+			
+			
+			ModelAndView mv = new ModelAndView();
+			mv.addObject("result", "employee created with empid: " + result);
+            mv.setViewName("userReg");
+            return mv;
+            
+			
+		}
+
+	
+	
+	 
+}
+
+EmployeeService.java:
+`````````````````````
+package com.sopra.service;
+
+import com.sopra.entity.Employee;
+
+public interface EmployeeService {
+
+	int save(Employee emp);
+}
+
+EmployeeServiceImpl.java:
+`````````````````````````
+package com.sopra.service.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.sopra.dao.EmployeeDao;
+import com.sopra.entity.Employee;
+import com.sopra.service.EmployeeService;
+
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+	 @Autowired
+	 private EmployeeDao dao;
+
+	public EmployeeDao getDao() {
+		return dao;
+	}
+
+	public void setDao(EmployeeDao dao) {
+		this.dao = dao;
+	}
+
+	@Override
+	@Transactional
+	public int save(Employee emp) {
+		//business logic
+		return dao.create(emp);
+	}
+	 
+}
+
+EmployeeDao.java:
+`````````````````
+package com.sopra.dao;
+
+import com.sopra.entity.Employee;
+
+public interface EmployeeDao {
+ 
+	int create(Employee emp);
+}
+
+EmployeeDaoImpl.java:
+`````````````````````
+package com.sopra.dao.impl;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.HibernateTemplate;
+import org.springframework.stereotype.Repository;
+
+import com.sopra.dao.EmployeeDao;
+import com.sopra.entity.Employee;
+
+@Repository
+public class EmployeeDaoImpl implements EmployeeDao {
+
+	 @Autowired
+	 private HibernateTemplate template;
+
+	public HibernateTemplate getTemplate() {
+		return template;
+	}
+
+	public void setTemplate(HibernateTemplate template) {
+		this.template = template;
+	}
+
+	@Override
+	
+	
+	public int create(Employee emp) {
+		
+		Integer result = (Integer)template.save(emp);
+		System.out.println(emp.getId());
+		return result;
+	}
+	 
+	 
+}
+
+Employee.java:
+````````````````
+package com.sopra.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="employee")
+public class Employee {
+	
+	@Id
+	@Column(name="id")
+	private int id;
+	@Column(name="firstname")
+	private String firstName;
+	@Column(name="lastname")
+	private String lastName;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+    public Employee()
+    {
+    	
+    }
+	public Employee(int id, String firstName, String lastName) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+    
+	public String toString()
+	{
+		return id + " " + firstName + " " +lastName;
+	}
+    
+}
+
+note: ojdbc6.jar must be added to the buildpath and lib folder of
+application.
+
+userReg.jsp:
+`````````````
+<%@ page isELIgnored="false" language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Employee Registraion Page</title>
+</head>
+<body>
+<h2> Employee Registration Page</h2>
+
+
+
+<form action="registerUser" method="post">
+<pre>
+ Enter Employee Id: <input type="text" name="empid"/><br/>
+ Enter Employee FirstName: <input type="text" name="firstName"/><br/>
+ Enter Employee LastName: <input type="text" name="lastName"/><br/>
+ 
+ <input type="submit" value="register"/>
+</pre>
+</form>
+<br/>
+${result}
+
+
+</body>
+</html>
+
+web.xml:
+````````
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<web-app>
+	<servlet>
+		<servlet-name>sopra</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>sopra</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+</web-app>
+
+
+sopra-servlet.xml:
+``````````````````
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+<context:component-scan
+		base-package="com.sopra"/>
+        
+<tx:annotation-driven/>
+
+	
+
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="sopra"></property>
+		<property name="password" value="sopra"></property>
+	</bean>
+
+	<bean id="mysessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		
+		<property name="dataSource" ref="dataSource"></property>
+
+		<property name="annotatedClasses">
+			<list>
+				<value>com.sopra.entity.Employee</value>
+			</list>
+		</property>
+
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.Oracle9Dialect</prop>
+				 <prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+
+			</props>
+		</property>
+	</bean>
+
+	<bean id="template"
+		class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="mysessionFactory"></property>
+	</bean>
+
+
+	<bean
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager"
+		name="transactionManager">
+		<property name="sessionFactory" ref="mysessionFactory" />
+	</bean>
+
+
+
+<bean id="view" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+   <property name="prefix">
+     <value>/WEB-INF/jsps/</value>
+   </property>
+   
+   <property name="suffix">
+      <value>.jsp</value>
+   </property>
+</bean>
+
+
+
+
+</beans>
+
+
+pom.xml:
+`````````
+required dependencies:
+
+ 
+  -spring orm
+  -spring web mvc
+  -hibernate core
+  
 
 
 
