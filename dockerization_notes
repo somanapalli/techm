@@ -1,0 +1,232 @@
+for spring boot application 
+example for docker file:
+
+FROM eclipse-temurin:19
+LABEL maintainer="rk@vihasys.com"
+WORKDIR /app
+COPY target/springboot-docker.jar /app/springboot-docker-demo.jar
+ENTRYPOINT ["java","-jar","springboot-docker-demo.jar"]
+
+command to create docker image:
+`````````````````````````````````
+docker build -t springboot-docker-demo:0.1.RELEASE . 
+
+  springboot-docker-demo -> image name
+  0.1.RELEASE -> tag name
+  . -> current direcotry where Dockerfile exists
+  
+to list out all the existing docker images:
+
+ docker images
+ 
+how to run docker image:
+
+ docker run -p 8081:8080 springboot-docker-demo 
+
+how to run docker image in detached mode:
+
+docker run -p 8081:8080 -d springboot-docker-demo  
+
+we are exposing the docker container port 8080 to o.s port i.e. 8081
+
+-d -> detached mode means it is running in background
+
+-p -> port 
+
+To see the docker logs:
+````````````````````````
+docker logs -f 1424
+
+1424 -> first 4 digits of docker id or you can pass 
+whole docker id
+
+-f -> to tail the logs
+ctrl+c to come back
+
+it will just exit the process it still remains docker 
+container is running in background
+
+how to stop docker container:
+
+ docker stop [first 4 digits of docker id]
+
+how to push docker image to docker hub:
+
+docker login
+
+give username and password 
+
+docker tag springboot-docker-demo sailurams/springboot-docker-demo:0.1.RELEASE
+
+when we execute the above command sailurams/springboot-docker-demo:0.1.RELEASE with this name image created locally.
+
+to see that use below command 
+
+docker images
+
+sailurams -> docker id in docker hub
+springboot-docker-demo -> repository name will create in 
+docker hub 
+ 
+ 
+how to push to docker hub:
+
+docker push sailurams/springboot-docker-demo:0.1.RELEASE
+
+How to pull docker image from docker hub:
+
+docker pull sailurams/springboot-docker-demo:0.1.RELEASE
+
+How to pull some other predefined images from docker hub:
+
+example:
+
+ docker pull mysql:latest
+ 
+ this command will pull the mysql image from docker hub 
+ to local repository.
+ 
+ docker pull mysql
+  even though if we didn't mention tag name by default it will pull latest tag because default tag is latest only.
+  
+ to see all the existing container 
+ 
+ docker ps
+ 
+ once we pull mysql image lets try to run this image by giving below command
+  
+  docker run -p 3307:3306 --name localhost 
+  -e MYSQL_ROOT_PASSWORD=root(mandatory)
+  -e MYSQL_DATABASE=sys
+  -e MYSQL_USER =rk
+  -e MYSQL_PASSWORD=rk
+  -d 
+  mysql:latest
+  
+  
+after above command , try to connect with mysql through 
+the docker container which we created by using below command 
+
+docker exec -it localhost bash
+
+bash-4.4# mysql -u rk -p
+Enter password: rk
+mysql>show databases;
+
+sys(database name)
+
+that means through the docker mysql image and respective container we 
+are allowed to run the mysql image in docker container.
+
+
+
+
+
+ command to remove the existing using container name:
+ 
+ docker rm localhost
+ 
+command to create docker network :
+``````````````````````````````````
+docker network springboot-mysql-net 
+ 
+to see all the networks:
+````````````````````````
+docker network ls
+
+to run the docker mysql image in docker container using network:
+
+docker run --name mysqldb --network springboot-mysql-net 
+-e MYSQL_ROOT_PASSWORD=root
+-e MYSQL_DATABASE=sys
+-d
+mysql:latest
+
+docker exec -it [4digit container id] bash
+
+bash#  mysql -u rk -p
+Enter password: rk 
+mysql> show databases
+it will show all the databases.
+
+\q -to come back from mysql to bash
+exit - to come back from bash to command promt
+
+
+note:
+before building your actual spring boot application give the database 
+properties according to your mysql image docker container credentails.
+like below inside your src/main/resources
+
+application-docker.properties:
+``````````````````````````````
+#server.port=2023
+spring.datasource.url=jdbc:mysql://mysqldb:3306/sys
+spring.datasource.username=rk
+#If MySQL installation is password proctored,then use below property to set password
+spring.datasource.password=rk
+#JPA settings
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+
+
+to activate above propeties profile we have to give one proeprty in our 
+actual application.properties like below.
+
+application.properties:
+````````````````````````
+spring.datasource.url=jdbc:mysql://localhost:3306/sys
+spring.datasource.username=root
+#If MySQL installation is password proctored,then use below property to set password
+spring.datasource.password=root
+#JPA settings
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.profiles.active=docker
+
+note: observe the last one
+
+now create the image for your sping boot restfull application 
+(before build the image for your application build the springboot application and be ready with jar file) 
+
+docker build -t springboot-restful-webservices:0.1.RELEASE .
+
+image gets created.
+
+run the image now:
+```````````````````
+docker run --network springboot-mysql-net --name springboot-mysql-container -p 8080:8080 -d springboot-restful-webservices:0.2.RELEASE
+
+with the above command it started to run the springboot application with mysql docker container credentials. means table also gets created 
+in the mysql docker container only 
+
+now open postman 
+send the postman post request to insert the data 
+
+now come and check in docker command prompt by giving below command
+
+docker exec -it mysqldb bash
+bash# mysql -u rk -p 
+Enter password: rk
+mysql> show databases
+
+sys
+
+mysql> use sys;
+
+database changed
+
+mysql> show tables;
+student
+
+mysql> select * From student;
+
+stid firstname lastname
+1      rama     krishna
+
+                  ---------------that's it------------------
+				  
+
+
